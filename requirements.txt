@@ -1,0 +1,14 @@
+pandas
+numpy
+openpyxl
+pyarrow
+requests
+beautifulsoup4
+python-dotenv
+openai
+rapidfuzz
+pypdf
+tqdm
+matplotlib
+statsmodels
+linearmodels
