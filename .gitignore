@@ -26,3 +26,6 @@ temp/
 
 # Optional local files
 *.log
+
+# Local analysis scripts
+scripts/
