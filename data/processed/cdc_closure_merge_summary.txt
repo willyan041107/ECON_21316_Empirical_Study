@@ -1,0 +1,64 @@
+CDC Closure Expansion and Merge Summary
+==================================================
+
+CDC clean records: 34
+CDC records included in main measure: 28
+Expanded school-date rows: 971
+School-year closure rows: 106
+Expansion review rows: 9
+Merged regression panel rows: 6,323
+
+Closure measures in merged regression panel:
+       cdc_closure_days_hurricane_related  ...  cdc_closure_days_named_storm
+count                         6323.000000  ...                   6323.000000
+mean                             0.123201  ...                      0.123201
+std                              1.232856  ...                      1.232856
+min                              0.000000  ...                      0.000000
+25%                              0.000000  ...                      0.000000
+50%                              0.000000  ...                      0.000000
+75%                              0.000000  ...                      0.000000
+max                             21.000000  ...                     21.000000
+
+[8 rows x 5 columns]
+
+Summary by graduation year:
+ graduation_year  rows  students  schools_with_cdc_closure  total_cdc_closure_days  mean_cdc_closure_days  max_cdc_closure_days  schools_with_named_storm_closure  total_named_storm_closure_days
+            1999   141      9879                         0                       0               0.000000                     0                                 0                               0
+            2000   178     13376                         0                       0               0.000000                     0                                 0                               0
+            2001   178     13376                         0                       0               0.000000                     0                                 0                               0
+            2002   169     13272                         0                       0               0.000000                     0                                 0                               0
+            2003   214     20347                         0                       0               0.000000                     0                                 0                               0
+            2004   215     20341                         0                       0               0.000000                     0                                 0                               0
+            2005   215     21009                         0                       0               0.000000                     0                                 0                               0
+            2006   213     19571                         0                       0               0.000000                     0                                 0                               0
+            2007   216     20102                         0                       0               0.000000                     0                                 0                               0
+            2008   221     20904                         0                       0               0.000000                     0                                 0                               0
+            2009   219     20897                         0                       0               0.000000                     0                                 0                               0
+            2010   231     24184                         0                       0               0.000000                     0                                 0                               0
+            2011   227     23649                         0                       0               0.000000                     0                                 0                               0
+            2012   234     23542                         0                       0               0.000000                     0                                 0                               0
+            2013   249     27131                        38                     248               0.995984                    10                                38                             248
+            2014   248     27610                         0                       0               0.000000                     0                                 0                               0
+            2015   247     26821                         0                       0               0.000000                     0                                 0                               0
+            2016   263     28719                        12                      82               0.311787                    13                                12                              82
+            2017   259     28565                        33                     449               1.733591                    21                                33                             449
+            2018   277     35236                         0                       0               0.000000                     0                                 0                               0
+            2019   280     34628                         0                       0               0.000000                     0                                 0                               0
+            2020   276     31939                         0                       0               0.000000                     0                                 0                               0
+            2021   276     30903                         0                       0               0.000000                     0                                 0                               0
+            2022   268     31005                         0                       0               0.000000                     0                                 0                               0
+            2023   273     31525                         0                       0               0.000000                     0                                 0                               0
+            2024   272     31118                         0                       0               0.000000                     0                                 0                               0
+            2025   264     25504                         0                       0               0.000000                     0                                 0                               0
+
+Expansion review rows:
+closure_record_id raw_record_id            eventname   closure_scope                                 district_name                    school_name  parish closure_start_date closure_end_date    match_method                                issue notes
+ CDC_LA201200022D  LA201200022D Tropical Storm Isaac district_system                  RECOVERY SCHOOL DISTRICT-LDE                            NaN ORLEANS         2012-08-27       2012-09-04 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201200023D  LA201200023D Tropical Storm Isaac district_system    RSD-KNOWLEDGE IS POWER PROGRAM (KIPP) N.O.                            NaN ORLEANS         2012-08-27       2012-09-04 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201200024D  LA201200024D Tropical Storm Isaac district_system RSD-NEW ORLEANS COLLEGE PREPARATORY ACADEMIES                            NaN ORLEANS         2012-08-27       2012-09-04 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201200025D  LA201200025D Tropical Storm Isaac district_system                INNOVATIONS IN MILESTONES INC.                            NaN     NaN         2012-08-27       2012-09-04 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201200034D  LA201200034D Tropical Storm Isaac district_system                        THE MAX CHARTER SCHOOL                            NaN     NaN         2012-08-27       2012-09-04 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201600055D  LA201600055D       LA Storm - Aug district_system                             ST. HELENA PARISH                            NaN     NaN         2016-08-12       2016-08-22 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201600144S  LA201600144S       LA Storm - Aug school_specific                                           NaN Teurlings Catholic High School     NaN         2016-08-12       2016-08-22 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201600145S  LA201600145S       LA Storm - Aug school_specific                                           NaN     St Thomas More High School     NaN         2016-08-12       2016-08-22 no_school_match no_matched_schools_or_no_valid_dates      
+ CDC_LA201600155S  LA201600155S       LA Storm - Aug school_specific Louisiana Achievement Charter Academies, Inc.         Willow Charter Academy     NaN         2016-08-12       2016-08-22 no_school_match no_matched_schools_or_no_valid_dates      

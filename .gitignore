@@ -1,13 +1,28 @@
-.venv/
+# Environment / secrets
 .env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
 __pycache__/
-.DS_Store
+*.pyc
+*.pyo
 .ipynb_checkpoints/
 
+# System files
+.DS_Store
+
+# Raw / temporary / large intermediate data
 data/raw/
 data/intermediate/
-data/processed/
+logs/
 
-results/tables/
-results/figures/
-results/logs/
+# Cache / temporary outputs
+.cache/
+tmp/
+temp/
+
+# Optional local files
+*.log

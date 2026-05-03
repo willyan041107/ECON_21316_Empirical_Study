@@ -1,14 +1,3 @@
-"""
-Check whether the OpenRouter API key is correctly loaded.
-
-Before running:
-1. Open the .env file.
-2. Replace PASTE_YOUR_KEY_HERE with your actual OpenRouter API key.
-3. Run this script from the project root:
-
-    python scripts/00_check_openrouter.py
-"""
-
 import os
 from dotenv import load_dotenv
 from openai import OpenAI

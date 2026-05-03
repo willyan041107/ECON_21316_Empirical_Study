@@ -1,0 +1,10 @@
+model_name,formula,n_obs,n_schools,weighted,fixed_effects,exclude_2025,mean_outcome,mean_exposure,r_squared
+M1_year_fe,eligibility_rate ~ exposure_index_pointmax + C(graduation_year),6323,311,False,year,False,0.6291230195191617,0.35446177732789064,0.1879303709854282
+M2_twfe_unweighted,eligibility_rate ~ exposure_index_pointmax + C(nces_school_id) + C(graduation_year),6323,311,False,school_year,False,0.6291230195191617,0.35446177732789064,0.7637666680716987
+M3_twfe_weighted_main,eligibility_rate ~ exposure_index_pointmax + C(nces_school_id) + C(graduation_year),6323,311,True,school_year,False,0.6291230195191617,0.35446177732789064,0.8023163371383786
+M4_twfe_weighted_stormmax,eligibility_rate ~ exposure_index_stormmax + C(nces_school_id) + C(graduation_year),6323,311,True,school_year,False,0.6291230195191617,0.5815328671149663,0.8022599408486237
+M5_twfe_weighted_100km_hurricane,eligibility_rate ~ within_100km_hurricane + C(nces_school_id) + C(graduation_year),6323,311,True,school_year,False,0.6291230195191617,0.10153408192313775,0.80226276795095
+M6_twfe_weighted_50km_hurricane,eligibility_rate ~ within_50km_hurricane + C(nces_school_id) + C(graduation_year),6323,311,True,school_year,False,0.6291230195191617,0.03273762454531077,0.8022982098077608
+M7_twfe_weighted_pointmax_z,eligibility_rate ~ exposure_pointmax_z + C(nces_school_id) + C(graduation_year),6323,311,True,school_year,False,0.6291230195191617,-2.3823352835859757e-16,0.8023163371383786
+R1_recipient_rate_no2025,recipient_rate ~ exposure_index_pointmax + C(nces_school_id) + C(graduation_year),6059,309,True,school_year,True,0.43561466936048054,0.34691472031827447,0.8638849007586229
+R2_acceptance_rate_no2025,acceptance_rate ~ exposure_index_pointmax + C(nces_school_id) + C(graduation_year),6054,307,True,school_year,True,0.6668208078021949,0.3470420482115202,0.7713783202004819

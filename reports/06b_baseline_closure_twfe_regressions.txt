@@ -1,0 +1,25 @@
+06b Baseline Closure TWFE Regressions
+================================================================================
+
+Main outcome: eligibility_rate
+Main closure variable: closure_days_hurricane_related_broad
+Standard errors clustered by NCES school.
+
+Results
+--------------------------------------------------------------------------------
+                                  model_name          outcome                      closure_variable      coef  std_error  p_value  n_obs  n_schools fixed_effects  weighted                controls  exclude_2025  r_squared  mean_outcome  mean_closure_var  sd_closure_var
+                       M1_year_fe_broad_days eligibility_rate  closure_days_hurricane_related_broad -0.001510   0.001561 0.333448   6323        311          year     False                                 False   0.186933      0.629123          0.178713        1.587083
+               M2_twfe_unweighted_broad_days eligibility_rate  closure_days_hurricane_related_broad -0.000900   0.000692 0.193827   6323        311   school_year     False                                 False   0.763813      0.629123          0.178713        1.587083
+            M3_twfe_weighted_broad_days_main eligibility_rate  closure_days_hurricane_related_broad -0.001029   0.000588 0.079818   6323        311   school_year      True                                 False   0.802383      0.629123          0.178713        1.587083
+M4_twfe_weighted_broad_days_exposure_control eligibility_rate  closure_days_hurricane_related_broad -0.001411   0.000649 0.029535   6323        311   school_year      True exposure_index_pointmax         False   0.802524      0.629123          0.178713        1.587083
+                M5_twfe_weighted_strict_days eligibility_rate closure_days_hurricane_related_strict -0.001214   0.000619 0.049830   6323        311   school_year      True                                 False   0.802424      0.629123          0.163372        1.541898
+                  M6_twfe_weighted_broad_any eligibility_rate   closure_any_hurricane_related_broad  0.000588   0.007218 0.935090   6323        311   school_year      True                                 False   0.802260      0.629123          0.029258        0.168543
+      M7_twfe_weighted_broad_max_consecutive eligibility_rate    closure_max_consecutive_days_broad -0.001103   0.000596 0.064304   6323        311   school_year      True                                 False   0.802400      0.629123          0.174601        1.577345
+         R1_recipient_rate_no2025_broad_days   recipient_rate  closure_days_hurricane_related_broad -0.000797   0.000384 0.037855   6059        309   school_year      True                                  True   0.863931      0.435615          0.160423        1.599669
+        R2_acceptance_rate_no2025_broad_days  acceptance_rate  closure_days_hurricane_related_broad  0.000104   0.000646 0.871737   6054        307   school_year      True                                  True   0.771379      0.666821          0.160555        1.600323
+            R3_eligibility_no2025_broad_days eligibility_rate  closure_days_hurricane_related_broad -0.001040   0.000598 0.081989   6059        309   school_year      True                                  True   0.802835      0.626297          0.160423        1.599669
+
+Preferred main model
+--------------------------------------------------------------------------------
+Coefficient on broad closure days = -0.001029, SE = 0.000588, p = 0.0798, N = 6323, schools = 311.
+Interpretation: one additional hurricane-related school closure day is associated with this change in eligibility_rate, conditional on school and graduation-year fixed effects.

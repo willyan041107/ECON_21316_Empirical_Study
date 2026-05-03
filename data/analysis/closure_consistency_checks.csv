@@ -1,0 +1,8 @@
+check,value,passes
+panel_row_count,6323,True
+duplicate_nces_school_id_graduation_year_rows,0,True
+broad_days_greater_or_equal_strict_days_all_rows,6323,True
+strict_any_matches_positive_days,6323,True
+broad_any_matches_positive_days,6323,True
+negative_broad_closure_days,0,True
+negative_strict_closure_days,0,True
