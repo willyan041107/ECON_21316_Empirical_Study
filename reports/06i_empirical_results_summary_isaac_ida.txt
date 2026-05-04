@@ -1,0 +1,117 @@
+06i Empirical Results Summary Report
+====================================================================================================
+
+Input panel
+----------------------------------------------------------------------------------------------------
+data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+
+1. Data snapshot
+----------------------------------------------------------------------------------------------------
+Panel rows: 6,323
+Unique schools: 311
+Graduation years: 1,999–2,025
+Rows with confirmed closure: 356
+Total confirmed school-level closure days: 2,698
+Maximum confirmed closure days: 27
+Mean eligibility rate: 0.6291
+Mean eligibility rate in closure rows: 0.6109
+Mean eligibility rate in non-closure rows: 0.6302
+
+Event-level closure snapshot
+
+             event_id           event_label  school_year_rows  unique_schools graduation_years  total_closure_days  mean_closure_days  max_closure_days  mean_eligibility_rate
+    2005_katrina_rita     2005 Katrina/Rita                34              34             2006                 523          15.382353                25               0.622879
+           2012_isaac            2012 Isaac                44              44             2013                 289           6.568182                11               0.589179
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta               127             127             2021                 749           5.897638                27               0.622861
+             2021_ida              2021 Ida                90              90             2022                 979          10.877778                27               0.563271
+        2024_francine         2024 Francine                61              61             2025                 158           2.590164                 5               0.665307
+
+2. Baseline TWFE
+----------------------------------------------------------------------------------------------------
+Preferred main model: weighted two-way fixed effects with school and graduation-year fixed effects.
+Coefficient = 0.000146, SE = 0.000450, p = 0.745.
+Per 10 closure days: 0.001460 change in eligibility rate.
+Interpretation: the pooled baseline estimate is close to zero and does not support a uniform negative effect of hurricane-related closure days.
+
+3. Leave-one-event-out robustness
+----------------------------------------------------------------------------------------------------
+             event_id           event_label  baseline_coef  zero_out_coef  change_from_baseline  p_value  event_closure_days_removed                                                                                                   interpretation
+    2005_katrina_rita     2005 Katrina/Rita       0.000146       0.000828              0.000682 0.141196                       523.0    Excluding this event makes the pooled estimate more positive, so Katrina/Rita is the main negative component.
+           2012_isaac            2012 Isaac       0.000146      -0.000044             -0.000190 0.923698                       289.0                                                   Excluding this event does not overturn the pooled null result.
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta       0.000146      -0.000422             -0.000568 0.399777                       749.0 Excluding this event makes the pooled estimate more negative, so 2020 is the main positive/confounded component.
+             2021_ida              2021 Ida       0.000146       0.000388              0.000242 0.523428                       979.0                   Excluding Ida changes the pooled estimate only modestly; Ida does not drive the pooled result.
+        2024_francine         2024 Francine       0.000146       0.000159              0.000013 0.722674                       158.0                                                   Excluding this event does not overturn the pooled null result.
+
+4. Event-specific TWFE regressions
+----------------------------------------------------------------------------------------------------
+             event_id           event_label                              target_variable      coef  std_error  p_value  coef_per_10_days  n_obs  n_schools  closure_rows  total_closure_days                                                                                                    interpretation
+    2005_katrina_rita     2005 Katrina/Rita     closure_days_confirmed_2005_katrina_rita -0.001225   0.000773 0.112721         -0.012253   6323        311            34               523.0   negative; strongest causal-style event, but confirmed TWFE is suggestive rather than conventionally significant
+           2012_isaac            2012 Isaac            closure_days_confirmed_2012_isaac  0.002887   0.001711 0.091535          0.028872   6323        311            44               289.0                                 noisy; pretrends acceptable after restrictions but post-event pattern is unstable
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta closure_days_confirmed_2020_laura_delta_zeta  0.002215   0.001202 0.065299          0.022149   6323        311           127               749.0 positive; not causally interpreted because restricted-comparison pretrends fail and event is COVID-era confounded
+             2021_ida              2021 Ida              closure_days_confirmed_2021_ida -0.000242   0.000667 0.717040         -0.002417   6323        311            90               979.0                                        near zero / weak; cleaner closure data but no detectable post-event effect
+        2024_francine         2024 Francine         closure_days_confirmed_2024_francine -0.001215   0.004007 0.761785         -0.012148   6323        311            61               158.0                                                                                      negative; statistically weak
+
+Closure variation audit
+
+             event_id           event_label  confirmed_closure_rows  confirmed_total_closure_days  confirmed_max_closure_days  strict_closure_rows  strict_total_closure_days  strict_max_closure_days
+    2005_katrina_rita     2005 Katrina/Rita                      34                         523.0                        25.0                   10                      178.0                     25.0
+           2012_isaac            2012 Isaac                      44                         289.0                        11.0                   38                      286.0                     11.0
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta                     127                         749.0                        27.0                   46                       87.0                      5.0
+             2021_ida              2021 Ida                      90                         979.0                        27.0                   50                      610.0                     41.0
+        2024_francine         2024 Francine                      61                         158.0                         5.0                   61                      158.0                      5.0
+
+5. IW-style event-study aggregates
+----------------------------------------------------------------------------------------------------
+           aggregate  event_time      coef  std_error  p_value                                                included_events                                                                               interpretation
+       iw_all_events           0  0.000752   0.000594 0.205872 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida                                                              No clear average dynamic effect
+       iw_all_events           1  0.000099   0.000602 0.869025 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida                                                              No clear average dynamic effect
+       iw_all_events           2  0.000186   0.000569 0.744068 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida                                                              No clear average dynamic effect
+       iw_all_events           3 -0.000108   0.000519 0.835868 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida                                                              No clear average dynamic effect
+iw_clean_sensitivity           0  0.001359   0.000787 0.084381           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta Marginal dynamic estimate; interpret cautiously because aggregate mixes heterogeneous events
+iw_clean_sensitivity           1 -0.001439   0.000777 0.064034                                  2005_katrina_rita; 2012_isaac Marginal dynamic estimate; interpret cautiously because aggregate mixes heterogeneous events
+iw_clean_sensitivity           2  0.000713   0.000659 0.278905           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta                                                              No clear average dynamic effect
+iw_clean_sensitivity           3  0.000181   0.000633 0.775474           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta                                                              No clear average dynamic effect
+
+Interpretation: the all-event aggregate remains close to zero in post-event years, which supports the conclusion that there is no single uniform dynamic effect across all hurricane events.
+
+6. Restricted-comparison event-study evidence
+----------------------------------------------------------------------------------------------------
+             event_id           event_label         sample_strategy  joint_pretrend_p_value   k0_coef  k0_p_value   k1_coef  k1_p_value                                                                                                interpretation  max_abs_pretrend_coef  num_pretrend_p_lt_0_10  num_pretrend_p_lt_0_05
+    2005_katrina_rita     2005 Katrina/Rita             full_sample                0.198007 -0.001290    0.119011 -0.000843    0.208035                                negative post-event pattern; use restricted samples for stronger comparability               0.001051                       0                       0
+    2005_katrina_rita     2005 Katrina/Rita   hurricane_risk_sample                0.309391 -0.001781    0.048868 -0.001506    0.040051                          main causal-style evidence: acceptable pretrend and negative post-event coefficients               0.001278                       0                       0
+    2005_katrina_rita     2005 Katrina/Rita pretrend_matched_sample                0.617648 -0.001658    0.082793 -0.000937    0.208506                          main causal-style evidence: acceptable pretrend and negative post-event coefficients               0.000827                       0                       0
+           2012_isaac            2012 Isaac             full_sample                0.105498  0.002825    0.144599 -0.002650    0.164199                pretrends improve under restrictions, but post-event coefficients change sign and remain noisy               0.002050                       0                       0
+           2012_isaac            2012 Isaac   hurricane_risk_sample                0.177944  0.003201    0.110366 -0.002870    0.140475                pretrends improve under restrictions, but post-event coefficients change sign and remain noisy               0.001833                       0                       0
+           2012_isaac            2012 Isaac pretrend_matched_sample                0.180197  0.001869    0.392249 -0.003270    0.120264                pretrends improve under restrictions, but post-event coefficients change sign and remain noisy               0.002493                       0                       0
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta             full_sample                0.277839  0.002638    0.043923  0.001877    0.174661 not clean causal evidence: restricted-sample pretrends remain problematic and COVID-era confounding is likely               0.001724                       2                       0
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta   hurricane_risk_sample                0.041037  0.002742    0.054705  0.003367    0.022682 not clean causal evidence: restricted-sample pretrends remain problematic and COVID-era confounding is likely               0.002867                       2                       2
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta pretrend_matched_sample                0.051057  0.002577    0.070360  0.003370    0.022419 not clean causal evidence: restricted-sample pretrends remain problematic and COVID-era confounding is likely               0.002738                       2                       2
+             2021_ida              2021 Ida             full_sample                0.749958 -0.000286    0.710451  0.000020    0.979953          closure data improved and pretrends are mostly acceptable, but post-event coefficients are near zero               0.000459                       0                       0
+             2021_ida              2021 Ida   hurricane_risk_sample                0.150684  0.001167    0.171101  0.000616    0.482232          closure data improved and pretrends are mostly acceptable, but post-event coefficients are near zero               0.001704                       1                       1
+             2021_ida              2021 Ida pretrend_matched_sample                0.110158  0.001076    0.209698  0.000643    0.466257          closure data improved and pretrends are mostly acceptable, but post-event coefficients are near zero               0.001777                       1                       1
+
+7. Main empirical interpretation
+----------------------------------------------------------------------------------------------------
+The latest 06 results do not support a uniform causal effect of hurricane-related closure days on TOPS eligibility. The pooled TWFE and IW-style aggregate estimates are close to zero.
+
+The strongest causal-style evidence comes from Katrina/Rita. Under restricted comparison groups, pretrend diagnostics improve, and the event-year and following-year coefficients remain negative.
+
+Laura/Delta/Zeta should not be interpreted causally. Restricted comparison groups reveal positive pretrends, and the 2020 event is likely confounded by the COVID-era schooling environment.
+
+Ida has cleaner closure measurement after the Isaac/Ida update, with the high-leverage 41-day confirmed value removed from the main measure. However, Ida's post-event coefficients remain close to zero.
+
+Isaac remains a secondary/noisy event. Its pretrends are more acceptable after restricted comparison, but post-event coefficients change sign across event years and should not anchor the causal claim.
+
+8. Recommended paper claim
+----------------------------------------------------------------------------------------------------
+Recommended wording: The evidence does not support a uniform statewide causal effect of hurricane-related school closures on TOPS eligibility. Instead, the results show substantial event heterogeneity. Katrina/Rita provides the strongest suggestive causal evidence of a negative effect, while Laura/Delta/Zeta is not causally interpretable because of pretrend violations and COVID-era confounding. Ida and Isaac provide weaker or near-zero evidence.
+
+Key findings table
+----------------------------------------------------------------------------------------------------
+               section                                         finding                                                                                  value                                                                                                                                                          interpretation
+         data_snapshot final_panel_uses_isaac_ida_updated_closure_data panel_rows=6,323; rows_with_closure=356; total_closure_days=2,698; max_closure_days=27                          Final 06 estimates use the cleaned Isaac/Ida-updated panel; the old Ida 41-day high-leverage value is no longer in the confirmed main measure.
+         baseline_twfe                    pooled_weighted_twfe_is_null                              coef=0.000146; SE=0.000450; p=0.745; per_10_days=0.001460                                                   The pooled baseline does not support a uniform negative effect of hurricane-related closure days on TOPS eligibility.
+restricted_event_study katrina_rita_is_strongest_causal_style_evidence                       pretrend_p=0.309; k0=-0.001781 (p=0.049); k1=-0.001506 (p=0.040)                                                                           Katrina/Rita has acceptable restricted-sample pretrends and negative post-event coefficients.
+restricted_event_study      laura_delta_zeta_fails_restricted_pretrend                                             pretrend_p=0.041; k0=0.002742; k1=0.003367 The 2020 event should not be interpreted causally because treated schools already show differential pre-trends and the event occurs in the COVID schooling environment.
+restricted_event_study       ida_data_cleaner_but_no_detectable_effect                        pretrend_p=0.750; k0=-0.000286 (p=0.710); k1=0.000020 (p=0.980)                                                            Ida has cleaner closure measurement after the 05f6–05g7 update, but post-event effects remain close to zero.
+       main_conclusion          event_heterogeneity_not_uniform_effect         pooled_null + Katrina/Rita negative + 2020 positive/confounded + Ida near zero                              The defensible paper claim is event heterogeneity with suggestive causal evidence for Katrina/Rita, not a uniform statewide causal effect.

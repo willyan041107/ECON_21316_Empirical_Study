@@ -1,0 +1,97 @@
+06o NCES CCD Controls Robustness Report
+====================================================================================================
+
+Input
+----------------------------------------------------------------------------------------------------
+data/processed/regression_panel_with_nces_ccd_controls_repaired.csv
+
+Preferred design
+----------------------------------------------------------------------------------------------------
+Stack: clean_non_covid_no_overlap = Katrina/Rita + Isaac
+Outcome: eligibility_rate
+Treatment: event-specific confirmed closure days
+Main interpretation sample: hurricane_risk_sample
+
+Control specifications
+----------------------------------------------------------------------------------------------------
+no_controls: No controls
+nces_size_controls: NCES size/resource controls
+nces_demographic_controls: NCES demographic controls
+nces_locale_controls: NCES locale controls
+nces_all_controls: All NCES controls
+
+Stacked sample audit
+----------------------------------------------------------------------------------------------------
+        sample_strategy  n_obs  n_original_schools  n_stack_units  treated_stack_units  control_stack_units  total_stack_closure_days  mean_outcome  mean_nces_pre_enrollment  mean_nces_pre_grade12_enrollment  mean_nces_pre_frl_share  mean_nces_pre_black_share  mean_nces_pre_hispanic_share  mean_nces_pre_teacher_fte  mean_nces_pre_student_teacher_ratio
+            full_sample   3600                 280            523                   78                  445                     812.0      0.611504                790.335592                        153.185199                 0.525123                   0.384136                      0.018281                  51.550285                            14.957884
+  hurricane_risk_sample   2242                 169            316                   78                  238                     812.0      0.627941                888.701124                        175.480222                 0.500851                   0.355213                      0.023048                  56.863318                            15.348965
+pretrend_matched_sample   1569                 129            202                   73                  129                     782.0      0.619126                937.866154                        189.749464                 0.502698                   0.382999                      0.025887                  60.150908                            15.343142
+
+Event-level stack audit
+----------------------------------------------------------------------------------------------------
+         event_id         sample_strategy  n_obs  n_schools  treated_schools  control_schools  total_event_closure_days locale_categories locale_base_category
+2005_katrina_rita             full_sample   1682        245               34              211                     523.0     2,3,4,unknown                    4
+       2012_isaac             full_sample   1918        278               44              234                     289.0   1,2,3,4,unknown                    4
+2005_katrina_rita   hurricane_risk_sample   1048        147               34              113                     523.0     2,3,4,unknown                    4
+       2012_isaac   hurricane_risk_sample   1194        169               44              125                     289.0   1,2,3,4,unknown                    4
+2005_katrina_rita pretrend_matched_sample    763         98               34               64                     523.0     2,3,4,unknown                    4
+       2012_isaac pretrend_matched_sample    806        104               39               65                     259.0   1,2,3,4,unknown                    4
+
+Joint pretrend tests
+----------------------------------------------------------------------------------------------------
+        sample_strategy              control_spec tested_event_times  wald_stat  df  p_value
+            full_sample               no_controls           -4,-3,-2   1.352699   3 0.716659
+            full_sample        nces_size_controls           -4,-3,-2   0.912264   3 0.822467
+            full_sample nces_demographic_controls           -4,-3,-2   0.766004   3 0.857580
+            full_sample      nces_locale_controls           -4,-3,-2   1.240677   3 0.743266
+            full_sample         nces_all_controls           -4,-3,-2   0.741240   3 0.863464
+  hurricane_risk_sample               no_controls           -4,-3,-2   0.774616   3 0.855528
+  hurricane_risk_sample        nces_size_controls           -4,-3,-2   1.151990   3 0.764541
+  hurricane_risk_sample nces_demographic_controls           -4,-3,-2   0.398021   3 0.940651
+  hurricane_risk_sample      nces_locale_controls           -4,-3,-2   0.863396   3 0.834251
+  hurricane_risk_sample         nces_all_controls           -4,-3,-2   0.571888   3 0.902837
+pretrend_matched_sample               no_controls           -4,-3,-2   0.803508   3 0.848628
+pretrend_matched_sample        nces_size_controls           -4,-3,-2   1.125442   3 0.770936
+pretrend_matched_sample nces_demographic_controls           -4,-3,-2   0.898908   3 0.825691
+pretrend_matched_sample      nces_locale_controls           -4,-3,-2   0.548856   3 0.908034
+pretrend_matched_sample         nces_all_controls           -4,-3,-2   0.558425   3 0.905880
+
+Post-window estimates
+----------------------------------------------------------------------------------------------------
+        sample_strategy              control_spec      post_window      coef  std_error  p_value  coef_per_10_days  n_obs  n_original_schools
+            full_sample               no_controls short_post_k0_k1 -0.001236   0.000623 0.047181         -0.012360   3600                 280
+            full_sample               no_controls  late_post_k2_k3 -0.000781   0.000679 0.249738         -0.007813   3600                 280
+            full_sample        nces_size_controls short_post_k0_k1 -0.001392   0.000648 0.031708         -0.013919   3600                 280
+            full_sample        nces_size_controls  late_post_k2_k3 -0.000817   0.000732 0.264342         -0.008174   3600                 280
+            full_sample nces_demographic_controls short_post_k0_k1 -0.001618   0.000629 0.010074         -0.016184   3600                 280
+            full_sample nces_demographic_controls  late_post_k2_k3 -0.000927   0.000729 0.203354         -0.009269   3600                 280
+            full_sample      nces_locale_controls short_post_k0_k1 -0.001411   0.000621 0.023032         -0.014112   3600                 280
+            full_sample      nces_locale_controls  late_post_k2_k3 -0.001079   0.000737 0.143432         -0.010790   3600                 280
+            full_sample         nces_all_controls short_post_k0_k1 -0.001919   0.000645 0.002946         -0.019187   3600                 280
+            full_sample         nces_all_controls  late_post_k2_k3 -0.001321   0.000783 0.091405         -0.013212   3600                 280
+  hurricane_risk_sample               no_controls short_post_k0_k1 -0.001188   0.000629 0.058948         -0.011878   2242                 169
+  hurricane_risk_sample               no_controls  late_post_k2_k3 -0.000605   0.000713 0.396128         -0.006051   2242                 169
+  hurricane_risk_sample        nces_size_controls short_post_k0_k1 -0.001471   0.000642 0.022067         -0.014708   2242                 169
+  hurricane_risk_sample        nces_size_controls  late_post_k2_k3 -0.000754   0.000777 0.331748         -0.007545   2242                 169
+  hurricane_risk_sample nces_demographic_controls short_post_k0_k1 -0.001523   0.000642 0.017654         -0.015227   2242                 169
+  hurricane_risk_sample nces_demographic_controls  late_post_k2_k3 -0.000809   0.000755 0.284101         -0.008086   2242                 169
+  hurricane_risk_sample      nces_locale_controls short_post_k0_k1 -0.001399   0.000639 0.028623         -0.013991   2242                 169
+  hurricane_risk_sample      nces_locale_controls  late_post_k2_k3 -0.000978   0.000812 0.228642         -0.009779   2242                 169
+  hurricane_risk_sample         nces_all_controls short_post_k0_k1 -0.001921   0.000664 0.003824         -0.019213   2242                 169
+  hurricane_risk_sample         nces_all_controls  late_post_k2_k3 -0.001336   0.000841 0.112360         -0.013359   2242                 169
+pretrend_matched_sample               no_controls short_post_k0_k1 -0.001197   0.000664 0.071344         -0.011972   1569                 129
+pretrend_matched_sample               no_controls  late_post_k2_k3 -0.000995   0.000754 0.186522         -0.009954   1569                 129
+pretrend_matched_sample        nces_size_controls short_post_k0_k1 -0.001564   0.000683 0.022059         -0.015644   1569                 129
+pretrend_matched_sample        nces_size_controls  late_post_k2_k3 -0.001286   0.000813 0.113803         -0.012864   1569                 129
+pretrend_matched_sample nces_demographic_controls short_post_k0_k1 -0.001707   0.000657 0.009441         -0.017065   1569                 129
+pretrend_matched_sample nces_demographic_controls  late_post_k2_k3 -0.001308   0.000784 0.095201         -0.013080   1569                 129
+pretrend_matched_sample      nces_locale_controls short_post_k0_k1 -0.001469   0.000668 0.027828         -0.014694   1569                 129
+pretrend_matched_sample      nces_locale_controls  late_post_k2_k3 -0.001391   0.000900 0.122482         -0.013905   1569                 129
+pretrend_matched_sample         nces_all_controls short_post_k0_k1 -0.002121   0.000704 0.002597         -0.021208   1569                 129
+pretrend_matched_sample         nces_all_controls  late_post_k2_k3 -0.001889   0.000906 0.037093         -0.018894   1569                 129
+
+Interpretation guide
+----------------------------------------------------------------------------------------------------
+The key check is whether the hurricane_risk_sample short_post_k0_k1 coefficient remains negative and close to the preferred 06j estimate of about -0.00119 per closure day.
+NCES controls are interacted with event-time indicators because school-by-stack fixed effects absorb time-invariant school characteristics.
+If the coefficient remains negative after adding official NCES controls, the result is less likely to be driven by pre-existing school size, student composition, school resources, or urbanicity/locale.

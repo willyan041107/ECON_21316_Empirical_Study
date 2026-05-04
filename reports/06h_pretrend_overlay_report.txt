@@ -1,0 +1,41 @@
+06h Pretrend Overlay Plot
+==========================================================================================
+
+Purpose
+------------------------------------------------------------------------------------------
+This script visualizes the 06g event-study estimates by overlaying full-sample, hurricane-risk-sample, and pretrend-matched-sample coefficients for each event.
+
+Inputs
+------------------------------------------------------------------------------------------
+data/analysis/06g_restricted_comparison_event_study_coefficients.csv
+data/analysis/06g_restricted_comparison_pretrend_tests.csv
+data/analysis/06g_restricted_comparison_sample_audit.csv
+
+Summary
+------------------------------------------------------------------------------------------
+             event_id         sample_strategy  joint_pretrend_p_value  max_abs_pretrend_coef  num_pretrend_p_lt_0_10  num_pretrend_p_lt_0_05   k0_coef  k0_p_value   k1_coef  k1_p_value  n_schools  treated_schools  control_schools
+    2005_katrina_rita             full_sample                0.198007               0.001051                       0                       0 -0.001290    0.119011 -0.000843    0.208035        311               34              277
+    2005_katrina_rita   hurricane_risk_sample                0.309391               0.001278                       0                       0 -0.001781    0.048868 -0.001506    0.040051        184               34              150
+    2005_katrina_rita pretrend_matched_sample                0.617648               0.000827                       0                       0 -0.001658    0.082793 -0.000937    0.208506         98               34               64
+           2012_isaac             full_sample                0.105498               0.002050                       0                       0  0.002825    0.144599 -0.002650    0.164199        311               44              267
+           2012_isaac   hurricane_risk_sample                0.177944               0.001833                       0                       0  0.003201    0.110366 -0.002870    0.140475        184               44              140
+           2012_isaac pretrend_matched_sample                0.180197               0.002493                       0                       0  0.001869    0.392249 -0.003270    0.120264        104               39               65
+2020_laura_delta_zeta             full_sample                0.277839               0.001724                       2                       0  0.002638    0.043923  0.001877    0.174661        311              127              184
+2020_laura_delta_zeta   hurricane_risk_sample                0.041037               0.002867                       2                       2  0.002742    0.054705  0.003367    0.022682        184              127               57
+2020_laura_delta_zeta pretrend_matched_sample                0.051057               0.002738                       2                       2  0.002577    0.070360  0.003370    0.022419        166              119               47
+             2021_ida             full_sample                0.749958               0.000459                       0                       0 -0.000286    0.710451  0.000020    0.979953        311               90              221
+             2021_ida   hurricane_risk_sample                0.150684               0.001704                       1                       1  0.001167    0.171101  0.000616    0.482232        184               90               94
+             2021_ida pretrend_matched_sample                0.110158               0.001777                       1                       1  0.001076    0.209698  0.000643    0.466257        169               84               85
+
+Figures
+------------------------------------------------------------------------------------------
+figures/06h_pretrend_overlay_2005_katrina_rita.png
+figures/06h_pretrend_overlay_2012_isaac.png
+figures/06h_pretrend_overlay_2020_laura_delta_zeta.png
+figures/06h_pretrend_overlay_2021_ida.png
+
+Interpretation guide
+------------------------------------------------------------------------------------------
+A visually credible pretrend should have pre-event coefficients close to zero, with no systematic upward or downward pattern before k=0.
+If restricted comparison groups improve pretrends and post-event coefficients remain similar, the event-specific causal interpretation becomes more credible.
+If restricted or matched samples make pretrends worse, the event should not be used as clean causal evidence.

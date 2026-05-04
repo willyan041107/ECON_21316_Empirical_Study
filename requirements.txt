@@ -12,3 +12,4 @@ tqdm
 matplotlib
 statsmodels
 linearmodels
+Jinja2>=3.1

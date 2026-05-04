@@ -1,0 +1,83 @@
+07b2 Old NCES CCD Fixed-Width Repair Report
+====================================================================================================
+
+Purpose
+----------------------------------------------------------------------------------------------------
+Repair old fixed-width CCD controls for 2001-02 through 2004-05, then rebuild clean-stack pre-event controls.
+
+Outputs
+----------------------------------------------------------------------------------------------------
+data/intermediate/nces_ccd_old_fixed_width_controls.csv
+data/intermediate/nces_ccd_annual_controls_long_repaired.csv
+data/processed/nces_ccd_pre_event_controls_clean_stack_repaired.csv
+data/processed/regression_panel_with_nces_ccd_controls_repaired.csv
+data/analysis/07b2_old_fixed_width_parse_audit.csv
+data/analysis/07b2_nces_ccd_pre_event_coverage_repaired.csv
+
+Old fixed-width parse summary
+----------------------------------------------------------------------------------------------------
+Old fixed-width annual rows: 6,269
+Old fixed-width schools: 1,633
+Old graduation years covered: 2002, 2003, 2004, 2005
+
+Old parse audit
+----------------------------------------------------------------------------------------------------
+school_year                                                                source_zip  member_name status  raw_lines  la_rows  has_enrollment  has_grade12  has_frl  has_black  has_hispanic  has_teacher_fte  has_locale
+    2001-02 data/raw/nces_ccd/public_school_universe/2001-02/2001-02_sc011akn_dat.zip sc011akn.dat parsed      32352     1559            True         True     True       True          True             True        True
+    2002-03 data/raw/nces_ccd/public_school_universe/2002-03/2002-03_sc020gkn_dat.zip sc020gkn.dat parsed      33004     1571            True         True     True       True          True             True        True
+    2003-04 data/raw/nces_ccd/public_school_universe/2003-04/2003-04_sc030ckn_dat.zip sc030ckn.dat parsed      33176     1574            True         True     True       True          True             True        True
+    2004-05 data/raw/nces_ccd/public_school_universe/2004-05/2004-05_sc041akn_dat.zip sc041akn.dat parsed      32975     1565            True         True     True       True          True             True        True
+
+Repaired annual controls summary
+----------------------------------------------------------------------------------------------------
+Annual repaired rows: 19,898
+Annual repaired schools: 2,246
+Graduation years covered: 2002, 2003, 2004, 2005, 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017
+
+Repaired annual non-missing coverage
+----------------------------------------------------------------------------------------------------
+ccd_enrollment: 11,710 rows (58.9%)
+ccd_grade12_enrollment: 3,219 rows (16.2%)
+ccd_frl_share: 11,555 rows (58.1%)
+ccd_black_share: 11,596 rows (58.3%)
+ccd_hispanic_share: 11,596 rows (58.3%)
+ccd_teacher_fte: 11,755 rows (59.1%)
+ccd_student_teacher_ratio: 11,510 rows (57.8%)
+ccd_locale: 19,898 rows (100.0%)
+
+Pre-event coverage by event
+----------------------------------------------------------------------------------------------------
+         event_id       event_label pre_graduation_years  annual_rows_in_pre_period  schools_with_any_pre_ccd_row  annual_rows_with_pre_enrollment  schools_with_pre_enrollment  annual_rows_with_pre_grade12_enrollment  schools_with_pre_grade12_enrollment  annual_rows_with_pre_frl_share  schools_with_pre_frl_share  annual_rows_with_pre_black_share  schools_with_pre_black_share  annual_rows_with_pre_hispanic_share  schools_with_pre_hispanic_share  annual_rows_with_pre_teacher_fte  schools_with_pre_teacher_fte  annual_rows_with_pre_student_teacher_ratio  schools_with_pre_student_teacher_ratio  annual_rows_with_pre_locale  schools_with_pre_locale
+2005_katrina_rita 2005 Katrina/Rita  2002,2003,2004,2005                       6269                          1633                             6110                         1604                                     1677                                  461                            6026                        1578                              6060                          1586                                 6060                             1586                              6159                          1604                                        6001                                    1580                         6269                     1633
+       2012_isaac        2012 Isaac  2009,2010,2011,2012                       6333                          1754                             2924                         1530                                      830                                  449                            2864                        1472                              2860                          1472                                 2860                             1472                              2865                          1482                                        2847                                    1478                         6333                     1754
+
+Main panel merge coverage
+----------------------------------------------------------------------------------------------------
+Original panel rows: 6,323
+Panel rows after repaired merge: 6,323
+
+Wide pre-controls coverage for 2005_katrina_rita
+----------------------------------------------------------------------------------------------------
+pre_enrollment_2005_katrina_rita: 5,598 rows (88.5%)
+pre_grade12_enrollment_2005_katrina_rita: 5,541 rows (87.6%)
+pre_frl_share_2005_katrina_rita: 5,587 rows (88.4%)
+pre_black_share_2005_katrina_rita: 5,587 rows (88.4%)
+pre_hispanic_share_2005_katrina_rita: 5,587 rows (88.4%)
+pre_teacher_fte_2005_katrina_rita: 5,613 rows (88.8%)
+pre_student_teacher_ratio_2005_katrina_rita: 5,587 rows (88.4%)
+pre_locale_2005_katrina_rita: 5,926 rows (93.7%)
+
+Wide pre-controls coverage for 2012_isaac
+----------------------------------------------------------------------------------------------------
+pre_enrollment_2012_isaac: 5,803 rows (91.8%)
+pre_grade12_enrollment_2012_isaac: 5,764 rows (91.2%)
+pre_frl_share_2012_isaac: 5,803 rows (91.8%)
+pre_black_share_2012_isaac: 5,803 rows (91.8%)
+pre_hispanic_share_2012_isaac: 5,803 rows (91.8%)
+pre_teacher_fte_2012_isaac: 5,789 rows (91.6%)
+pre_student_teacher_ratio_2012_isaac: 5,789 rows (91.6%)
+pre_locale_2012_isaac: 6,102 rows (96.5%)
+
+Next step
+----------------------------------------------------------------------------------------------------
+If Katrina/Rita pre-controls now have meaningful coverage, write/run 06o to add repaired NCES CCD pre-event controls to the preferred clean stacked model.

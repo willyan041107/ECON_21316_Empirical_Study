@@ -1,31 +1,53 @@
-# Environment / secrets
-.env
-.env.*
-!.env.example
-
-# Python
+# Python / environment
 .venv/
-venv/
 __pycache__/
 *.pyc
-*.pyo
 .ipynb_checkpoints/
 
-# System files
-.DS_Store
+# Secrets
+.env
+*.key
+*API_KEY*
+*api_key*
+canvas_state.json
 
-# Raw / temporary / large intermediate data
+# Local scripts
+scripts/
+
+# Raw / intermediate / analysis data
 data/raw/
 data/intermediate/
+data/analysis/
+
+# Ignore all processed data by default, then explicitly keep final files
+data/processed/*
+!data/processed/
+!data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+!data/processed/regression_panel_with_nces_ccd_controls_repaired.csv
+!data/processed/nces_ccd_pre_event_controls_clean_stack_repaired.csv
+
+# Outputs: keep only figures
+outputs/*
+!outputs/
+!outputs/figures/
+!outputs/figures/**
+
+# Also allow figures/ if you use that folder
+!figures/
+!figures/**
+
+# Keep reports
+!reports/
+!reports/**
+
+# Local logs / generated tables / LaTeX build artifacts
 logs/
-
-# Cache / temporary outputs
-.cache/
-tmp/
-temp/
-
-# Optional local files
+results/
+tables/
+*.aux
+*.fdb_latexmk
+*.fls
 *.log
-
-# Local analysis scripts
-scripts/
+texput.log
+section6_tables_preview.*
+.gitignore.bak.*

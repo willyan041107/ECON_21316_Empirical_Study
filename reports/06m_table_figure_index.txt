@@ -1,0 +1,39 @@
+06m Table and Figure Index
+====================================================================================================
+
+Recommended Section 6 placement
+----------------------------------------------------------------------------------------------------
+6.1 Data and final treatment construction
+  Table 1: table1_panel_and_closure_exposure.tex
+  Figure 1: figure1_closure_exposure_by_event.png/pdf
+
+6.2 Baseline pooled TWFE and event heterogeneity
+  Table 2: table2_baseline_and_event_heterogeneity.tex
+  Figure 5: figure5_iw_diagnostic_dynamic_path.png/pdf
+  Appendix Table A1: appendix_table_a1_iw_diagnostic.tex
+
+6.3 Preferred stacked event-study estimates
+  Table 3: table3_preferred_stacked_event_study.tex
+  Figure 3: figure3_preferred_stacked_dynamic_path.png/pdf
+
+6.4 BJS-style imputation robustness
+  Table 4: table4_bjs_style_imputation_robustness.tex
+  Figure 4: figure4_imputation_dynamic_path.png/pdf
+
+6.5 Interpretation and limitations
+  Figure 2: figure2_main_coefficient_comparison.png/pdf
+  Appendix Table A2: appendix_table_a2_event_interpretation.tex
+
+Main empirical positioning
+----------------------------------------------------------------------------------------------------
+Main result: 06j stacked event study, clean_non_covid_no_overlap, hurricane-risk sample.
+Robustness: 06k BJS-style imputation, same preferred stack and sample.
+Diagnostic: 06e IW-style event study, used to show why all-event dynamic averages are not the preferred causal estimand.
+
+LaTeX packages
+----------------------------------------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{threeparttable}
+\usepackage{makecell}
+\usepackage{graphicx}
+\usepackage{caption}

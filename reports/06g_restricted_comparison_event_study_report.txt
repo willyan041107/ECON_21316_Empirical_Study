@@ -1,0 +1,190 @@
+06g Restricted-Comparison Event Study Pretrend Checks
+==========================================================================================
+
+Input
+------------------------------------------------------------------------------------------
+data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+
+Purpose
+------------------------------------------------------------------------------------------
+This script checks whether event-study pretrends improve when treated schools are compared with more similar control schools.
+
+Sample strategies
+------------------------------------------------------------------------------------------
+full_sample: treated schools compared with all schools.
+hurricane_risk_sample: treated schools compared with schools that have historical confirmed hurricane-related closure exposure.
+pretrend_matched_sample: treated schools compared with nearest-neighbor controls matched on pre-event eligibility mean and slope.
+
+Sample audit
+------------------------------------------------------------------------------------------
+             event_id         sample_strategy  n_obs  n_schools  treated_schools  control_schools  total_event_closure_days  mean_outcome
+    2005_katrina_rita             full_sample   6323        311               34              277                     523.0      0.629123
+    2005_katrina_rita   hurricane_risk_sample   3959        184               34              150                     523.0      0.641659
+    2005_katrina_rita pretrend_matched_sample   2562         98               34               64                     523.0      0.645602
+           2012_isaac             full_sample   6323        311               44              267                     289.0      0.629123
+           2012_isaac   hurricane_risk_sample   3959        184               44              140                     289.0      0.641659
+           2012_isaac pretrend_matched_sample   2601        104               39               65                     259.0      0.627893
+2020_laura_delta_zeta             full_sample   6323        311              127              184                     749.0      0.629123
+2020_laura_delta_zeta   hurricane_risk_sample   3959        184              127               57                     749.0      0.641659
+2020_laura_delta_zeta pretrend_matched_sample   3823        166              119               47                     724.0      0.649967
+             2021_ida             full_sample   6323        311               90              221                     979.0      0.629123
+             2021_ida   hurricane_risk_sample   3959        184               90               94                     979.0      0.641659
+             2021_ida pretrend_matched_sample   3827        169               84               85                     921.0      0.643216
+
+Pretrend tests
+------------------------------------------------------------------------------------------
+             event_id         sample_strategy                test_name tested_event_times  wald_stat  df  p_value
+    2005_katrina_rita             full_sample      joint_pretrend_test           -4,-3,-2   4.665347   3 0.198007
+    2005_katrina_rita             full_sample individual_pretrend_test                 -4   0.918293   1 0.337924
+    2005_katrina_rita             full_sample individual_pretrend_test                 -3   1.016852   1 0.313267
+    2005_katrina_rita             full_sample individual_pretrend_test                 -2   0.003486   1 0.952919
+    2005_katrina_rita   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   3.589083   3 0.309391
+    2005_katrina_rita   hurricane_risk_sample individual_pretrend_test                 -4   1.207787   1 0.271771
+    2005_katrina_rita   hurricane_risk_sample individual_pretrend_test                 -3   0.085956   1 0.769382
+    2005_katrina_rita   hurricane_risk_sample individual_pretrend_test                 -2   0.465455   1 0.495086
+    2005_katrina_rita pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   1.787548   3 0.617648
+    2005_katrina_rita pretrend_matched_sample individual_pretrend_test                 -4   0.435041   1 0.509526
+    2005_katrina_rita pretrend_matched_sample individual_pretrend_test                 -3   0.283936   1 0.594133
+    2005_katrina_rita pretrend_matched_sample individual_pretrend_test                 -2   0.015764   1 0.900085
+           2012_isaac             full_sample      joint_pretrend_test           -4,-3,-2   6.129049   3 0.105498
+           2012_isaac             full_sample individual_pretrend_test                 -4   1.369225   1 0.241945
+           2012_isaac             full_sample individual_pretrend_test                 -3   0.986494   1 0.320601
+           2012_isaac             full_sample individual_pretrend_test                 -2   0.449420   1 0.502611
+           2012_isaac   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   4.917434   3 0.177944
+           2012_isaac   hurricane_risk_sample individual_pretrend_test                 -4   0.838526   1 0.359819
+           2012_isaac   hurricane_risk_sample individual_pretrend_test                 -3   1.185294   1 0.276281
+           2012_isaac   hurricane_risk_sample individual_pretrend_test                 -2   0.235569   1 0.627425
+           2012_isaac pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   4.887839   3 0.180197
+           2012_isaac pretrend_matched_sample individual_pretrend_test                 -4   0.391957   1 0.531273
+           2012_isaac pretrend_matched_sample individual_pretrend_test                 -3   1.767862   1 0.183647
+           2012_isaac pretrend_matched_sample individual_pretrend_test                 -2   0.175876   1 0.674941
+2020_laura_delta_zeta             full_sample      joint_pretrend_test           -4,-3,-2   3.852491   3 0.277839
+2020_laura_delta_zeta             full_sample individual_pretrend_test                 -4   0.187370   1 0.665114
+2020_laura_delta_zeta             full_sample individual_pretrend_test                 -3   3.371063   1 0.066351
+2020_laura_delta_zeta             full_sample individual_pretrend_test                 -2   2.976742   1 0.084469
+2020_laura_delta_zeta   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   8.254368   3 0.041037
+2020_laura_delta_zeta   hurricane_risk_sample individual_pretrend_test                 -4   1.487177   1 0.222655
+2020_laura_delta_zeta   hurricane_risk_sample individual_pretrend_test                 -3   7.547759   1 0.006008
+2020_laura_delta_zeta   hurricane_risk_sample individual_pretrend_test                 -2   6.595902   1 0.010221
+2020_laura_delta_zeta pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   7.768033   3 0.051057
+2020_laura_delta_zeta pretrend_matched_sample individual_pretrend_test                 -4   1.783401   1 0.181732
+2020_laura_delta_zeta pretrend_matched_sample individual_pretrend_test                 -3   7.135255   1 0.007558
+2020_laura_delta_zeta pretrend_matched_sample individual_pretrend_test                 -2   6.048037   1 0.013922
+             2021_ida             full_sample      joint_pretrend_test           -4,-3,-2   1.212708   3 0.749958
+             2021_ida             full_sample individual_pretrend_test                 -4   0.088503   1 0.766089
+             2021_ida             full_sample individual_pretrend_test                 -3   0.392449   1 0.531015
+             2021_ida             full_sample individual_pretrend_test                 -2   0.000054   1 0.994133
+             2021_ida   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   5.306451   3 0.150684
+             2021_ida   hurricane_risk_sample individual_pretrend_test                 -4   0.589557   1 0.442590
+             2021_ida   hurricane_risk_sample individual_pretrend_test                 -3   4.469412   1 0.034507
+             2021_ida   hurricane_risk_sample individual_pretrend_test                 -2   0.400451   1 0.526856
+             2021_ida pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   6.030029   3 0.110158
+             2021_ida pretrend_matched_sample individual_pretrend_test                 -4   0.459351   1 0.497927
+             2021_ida pretrend_matched_sample individual_pretrend_test                 -3   4.759868   1 0.029131
+             2021_ida pretrend_matched_sample individual_pretrend_test                 -2   0.429647   1 0.512162
+
+Event-study coefficients
+------------------------------------------------------------------------------------------
+             event_id         sample_strategy  event_time  calendar_year      coef  std_error  p_value  was_estimated  overlaps_other_event_year  n_schools  treated_schools  control_schools
+    2005_katrina_rita             full_sample          -1           2005  0.000000   0.000000      NaN           True                      False        311               34              277
+    2005_katrina_rita             full_sample          -4           2002 -0.001051   0.001097 0.337924           True                      False        311               34              277
+    2005_katrina_rita             full_sample          -3           2003  0.000947   0.000939 0.313267           True                      False        311               34              277
+    2005_katrina_rita             full_sample          -2           2004  0.000045   0.000755 0.952919           True                      False        311               34              277
+    2005_katrina_rita             full_sample           0           2006 -0.001290   0.000827 0.119011           True                      False        311               34              277
+    2005_katrina_rita             full_sample           1           2007 -0.000843   0.000670 0.208035           True                      False        311               34              277
+    2005_katrina_rita             full_sample           2           2008 -0.000580   0.000718 0.419053           True                      False        311               34              277
+    2005_katrina_rita             full_sample           3           2009 -0.000501   0.000624 0.421754           True                      False        311               34              277
+    2005_katrina_rita   hurricane_risk_sample          -1           2005  0.000000   0.000000      NaN           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample          -4           2002 -0.001278   0.001163 0.271771           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample          -3           2003  0.000283   0.000966 0.769382           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample          -2           2004 -0.000544   0.000797 0.495086           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample           0           2006 -0.001781   0.000904 0.048868           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample           1           2007 -0.001506   0.000734 0.040051           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample           2           2008 -0.000997   0.000777 0.199064           True                      False        184               34              150
+    2005_katrina_rita   hurricane_risk_sample           3           2009 -0.000877   0.000674 0.193393           True                      False        184               34              150
+    2005_katrina_rita pretrend_matched_sample          -1           2005  0.000000   0.000000      NaN           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample          -4           2002 -0.000827   0.001254 0.509526           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample          -3           2003  0.000539   0.001011 0.594133           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample          -2           2004 -0.000103   0.000823 0.900085           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample           0           2006 -0.001658   0.000956 0.082793           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample           1           2007 -0.000937   0.000745 0.208506           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample           2           2008 -0.001070   0.000818 0.190755           True                      False         98               34               64
+    2005_katrina_rita pretrend_matched_sample           3           2009 -0.001022   0.000714 0.152261           True                      False         98               34               64
+           2012_isaac             full_sample          -1           2012  0.000000   0.000000      NaN           True                      False        311               44              267
+           2012_isaac             full_sample          -4           2009  0.002050   0.001752 0.241945           True                      False        311               44              267
+           2012_isaac             full_sample          -3           2010 -0.001591   0.001602 0.320601           True                      False        311               44              267
+           2012_isaac             full_sample          -2           2011  0.001202   0.001793 0.502611           True                      False        311               44              267
+           2012_isaac             full_sample           0           2013  0.002825   0.001937 0.144599           True                      False        311               44              267
+           2012_isaac             full_sample           1           2014 -0.002650   0.001905 0.164199           True                      False        311               44              267
+           2012_isaac             full_sample           2           2015  0.000936   0.001366 0.492946           True                      False        311               44              267
+           2012_isaac             full_sample           3           2016 -0.000675   0.002037 0.740331           True                      False        311               44              267
+           2012_isaac   hurricane_risk_sample          -1           2012  0.000000   0.000000      NaN           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample          -4           2009  0.001704   0.001861 0.359819           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample          -3           2010 -0.001833   0.001684 0.276281           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample          -2           2011  0.000908   0.001870 0.627425           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample           0           2013  0.003201   0.002005 0.110366           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample           1           2014 -0.002870   0.001947 0.140475           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample           2           2015  0.001014   0.001479 0.492855           True                      False        184               44              140
+           2012_isaac   hurricane_risk_sample           3           2016 -0.000359   0.002118 0.865522           True                      False        184               44              140
+           2012_isaac pretrend_matched_sample          -1           2012  0.000000   0.000000      NaN           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample          -4           2009  0.001214   0.001939 0.531273           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample          -3           2010 -0.002493   0.001875 0.183647           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample          -2           2011  0.000854   0.002036 0.674941           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample           0           2013  0.001869   0.002185 0.392249           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample           1           2014 -0.003270   0.002105 0.120264           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample           2           2015 -0.000259   0.001611 0.872071           True                      False        104               39               65
+           2012_isaac pretrend_matched_sample           3           2016 -0.001546   0.002160 0.474174           True                      False        104               39               65
+2020_laura_delta_zeta             full_sample          -1           2020  0.000000   0.000000      NaN           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample          -4           2017  0.000291   0.000673 0.665114           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample          -3           2018  0.001584   0.000863 0.066351           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample          -2           2019  0.001724   0.000999 0.084469           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample           0           2021  0.002638   0.001309 0.043923           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample           1           2022  0.001877   0.001383 0.174661           True                       True        311              127              184
+2020_laura_delta_zeta             full_sample           2           2023  0.001524   0.001122 0.174402           True                      False        311              127              184
+2020_laura_delta_zeta             full_sample           3           2024  0.001116   0.001032 0.279329           True                      False        311              127              184
+2020_laura_delta_zeta   hurricane_risk_sample          -1           2020  0.000000   0.000000      NaN           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample          -4           2017  0.000888   0.000728 0.222655           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample          -3           2018  0.002537   0.000923 0.006008           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample          -2           2019  0.002867   0.001116 0.010221           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample           0           2021  0.002742   0.001427 0.054705           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample           1           2022  0.003367   0.001478 0.022682           True                       True        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample           2           2023  0.002177   0.001184 0.066056           True                      False        184              127               57
+2020_laura_delta_zeta   hurricane_risk_sample           3           2024  0.002150   0.001110 0.052681           True                      False        184              127               57
+2020_laura_delta_zeta pretrend_matched_sample          -1           2020  0.000000   0.000000      NaN           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample          -4           2017  0.000974   0.000729 0.181732           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample          -3           2018  0.002475   0.000927 0.007558           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample          -2           2019  0.002738   0.001113 0.013922           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample           0           2021  0.002577   0.001424 0.070360           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample           1           2022  0.003370   0.001476 0.022419           True                       True        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample           2           2023  0.002120   0.001181 0.072680           True                      False        166              119               47
+2020_laura_delta_zeta pretrend_matched_sample           3           2024  0.002029   0.001109 0.067386           True                      False        166              119               47
+             2021_ida             full_sample          -1           2021  0.000000   0.000000      NaN           True                       True        311               90              221
+             2021_ida             full_sample          -4           2018 -0.000214   0.000719 0.766089           True                      False        311               90              221
+             2021_ida             full_sample          -3           2019  0.000459   0.000733 0.531015           True                      False        311               90              221
+             2021_ida             full_sample          -2           2020  0.000005   0.000703 0.994133           True                      False        311               90              221
+             2021_ida             full_sample           0           2022 -0.000286   0.000770 0.710451           True                      False        311               90              221
+             2021_ida             full_sample           1           2023  0.000020   0.000782 0.979953           True                      False        311               90              221
+             2021_ida             full_sample           2           2024 -0.000690   0.000851 0.417420           True                      False        311               90              221
+             2021_ida             full_sample           3           2025 -0.000544   0.000732 0.457125           True                       True        311               90              221
+             2021_ida   hurricane_risk_sample          -1           2021  0.000000   0.000000      NaN           True                       True        184               90               94
+             2021_ida   hurricane_risk_sample          -4           2018  0.000645   0.000840 0.442590           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample          -3           2019  0.001704   0.000806 0.034507           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample          -2           2020  0.000495   0.000782 0.526856           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample           0           2022  0.001167   0.000852 0.171101           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample           1           2023  0.000616   0.000877 0.482232           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample           2           2024  0.000245   0.000929 0.792400           True                      False        184               90               94
+             2021_ida   hurricane_risk_sample           3           2025  0.000146   0.000769 0.849428           True                       True        184               90               94
+             2021_ida pretrend_matched_sample          -1           2021  0.000000   0.000000      NaN           True                       True        169               84               85
+             2021_ida pretrend_matched_sample          -4           2018  0.000570   0.000842 0.497927           True                      False        169               84               85
+             2021_ida pretrend_matched_sample          -3           2019  0.001777   0.000814 0.029131           True                      False        169               84               85
+             2021_ida pretrend_matched_sample          -2           2020  0.000517   0.000788 0.512162           True                      False        169               84               85
+             2021_ida pretrend_matched_sample           0           2022  0.001076   0.000857 0.209698           True                      False        169               84               85
+             2021_ida pretrend_matched_sample           1           2023  0.000643   0.000883 0.466257           True                      False        169               84               85
+             2021_ida pretrend_matched_sample           2           2024  0.000149   0.000939 0.874008           True                      False        169               84               85
+             2021_ida pretrend_matched_sample           3           2025 -0.000034   0.000778 0.964775           True                       True        169               84               85
+
+Interpretation guide
+------------------------------------------------------------------------------------------
+If an event's joint pretrend p-value becomes larger under restricted or matched comparison groups, the original pretrend issue may have come from using an overly broad statewide comparison group.
+If the p-value remains small or the estimates become unstable, that event should still be interpreted cautiously as suggestive rather than clean causal evidence.
+Do not choose a comparison group only because it produces the desired result. The preferred restricted sample must be justified using pre-treatment comparability.

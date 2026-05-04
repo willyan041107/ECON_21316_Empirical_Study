@@ -1,0 +1,85 @@
+06l Final Empirical Results Summary
+====================================================================================================
+
+1. Recommended placement in the paper
+----------------------------------------------------------------------------------------------------
+Recommended main result: 06j stacked event study, using the clean_non_covid_no_overlap stack as the preferred specification.
+Recommended robustness check: 06k BJS-style imputation event study, reported as a counterfactual-imputation validation of the 06j result.
+
+Reason: 06j is the clearer design-based stacked event-study result. 06k is powerful and supports the same conclusion, but it should be described as BJS-style/adapted because the treatment is continuous and episodic rather than binary absorbing treatment.
+
+2. Final panel snapshot
+----------------------------------------------------------------------------------------------------
+panel_rows: 6323
+unique_schools: 311
+first_graduation_year: 1999
+last_graduation_year: 2025
+rows_with_confirmed_closure: 356
+total_confirmed_closure_days: 2698
+max_confirmed_closure_days: 27
+share_rows_with_confirmed_closure: 0.05630238810691127
+mean_eligibility_rate: 0.6291230195191617
+mean_eligibility_rate_closure_rows: 0.6109076630601779
+mean_eligibility_rate_nonclosure_rows: 0.630209774488057
+
+3. Baseline pooled TWFE
+----------------------------------------------------------------------------------------------------
+Preferred baseline model: M3_twfe_weighted_confirmed_days_main
+coef=0.000146, SE=0.000450, p=0.745, per_10_days=0.001460
+Interpretation: pooled TWFE is a baseline descriptive specification. It should not be framed as the main causal estimate.
+
+4. Main results table
+----------------------------------------------------------------------------------------------------
+                      section                estimator                            specification                sample                                        estimand      coef  std_error  p_value  coef_per_10_days  pretrend_p_value                                                                                                   interpretation
+         Baseline pooled TWFE                 06b TWFE M3 weighted confirmed closure-days model            Full panel                 Pooled closure-days coefficient  0.000146   0.000450 0.745358          0.001460               NaN                                Pooled baseline estimate; does not by itself identify a clean event-study effect.
+     Main causal-style result  06j stacked event study               clean_non_covid_no_overlap Hurricane-risk sample         Short-post k=0,1 effect per closure day -0.001188   0.000629 0.058948         -0.011878          0.855528                   Preferred main result: clean stack excluding COVID-era and overlap-contaminated event windows.
+Robustness / imputation check 06k BJS-style imputation               clean_non_covid_no_overlap Hurricane-risk sample Short-post k=0,1 imputed effect per closure day -0.001240   0.000521 0.017275         -0.012404          0.907946 Counterfactual-imputation robustness check; confirms the negative short-run effect in the preferred clean stack.
+
+5. Preferred 06j stacked event-study results
+----------------------------------------------------------------------------------------------------
+              estimator                     role                 stack_spec         sample_strategy           window  joint_pretrend_p_value      coef  std_error  p_value  coef_per_10_days               included_events                                                                 interpretation
+06j_stacked_event_study              main_result clean_non_covid_no_overlap             full_sample short_post_k0_k1                0.716659 -0.001236   0.000623 0.047181         -0.012360 2005_katrina_rita; 2012_isaac              negative short-run effect; significant at 5%; pretrend acceptable
+06j_stacked_event_study secondary_dynamic_window clean_non_covid_no_overlap             full_sample  late_post_k2_k3                0.716659 -0.000781   0.000679 0.249738         -0.007813 2005_katrina_rita; 2012_isaac negative late-post estimate; not significant; interpreted as persistence check
+06j_stacked_event_study              main_result clean_non_covid_no_overlap   hurricane_risk_sample short_post_k0_k1                0.855528 -0.001188   0.000629 0.058948         -0.011878 2005_katrina_rita; 2012_isaac                negative short-run effect; marginal at 10%; pretrend acceptable
+06j_stacked_event_study secondary_dynamic_window clean_non_covid_no_overlap   hurricane_risk_sample  late_post_k2_k3                0.855528 -0.000605   0.000713 0.396128         -0.006051 2005_katrina_rita; 2012_isaac negative late-post estimate; not significant; interpreted as persistence check
+06j_stacked_event_study              main_result clean_non_covid_no_overlap pretrend_matched_sample short_post_k0_k1                0.848628 -0.001197   0.000664 0.071344         -0.011972 2005_katrina_rita; 2012_isaac                negative short-run effect; marginal at 10%; pretrend acceptable
+06j_stacked_event_study secondary_dynamic_window clean_non_covid_no_overlap pretrend_matched_sample  late_post_k2_k3                0.848628 -0.000995   0.000754 0.186522         -0.009954 2005_katrina_rita; 2012_isaac negative late-post estimate; not significant; interpreted as persistence check
+
+6. 06k imputation robustness results
+----------------------------------------------------------------------------------------------------
+               estimator                   role                 stack_spec         sample_strategy                           window  joint_imputed_pretrend_p_value      coef  std_error  p_value  coef_per_10_days               included_events                                                                 interpretation
+06k_bjs_style_imputation robustness_pre_placebo clean_non_covid_no_overlap             full_sample pre_placebo_k_minus_4_to_minus_2                        0.761697 -0.000095   0.000148 0.521599         -0.000949 2005_katrina_rita; 2012_isaac            negative pre-placebo estimate; not significant; should be near zero
+06k_bjs_style_imputation robustness_main_window clean_non_covid_no_overlap             full_sample                 short_post_k0_k1                        0.761697 -0.001228   0.000529 0.020215         -0.012280 2005_katrina_rita; 2012_isaac              negative short-run effect; significant at 5%; pretrend acceptable
+06k_bjs_style_imputation robustness_late_window clean_non_covid_no_overlap             full_sample                  late_post_k2_k3                        0.761697 -0.000709   0.000549 0.196454         -0.007089 2005_katrina_rita; 2012_isaac negative late-post estimate; not significant; interpreted as persistence check
+06k_bjs_style_imputation robustness_pre_placebo clean_non_covid_no_overlap   hurricane_risk_sample pre_placebo_k_minus_4_to_minus_2                        0.907946 -0.000058   0.000147 0.690823         -0.000583 2005_katrina_rita; 2012_isaac            negative pre-placebo estimate; not significant; should be near zero
+06k_bjs_style_imputation robustness_main_window clean_non_covid_no_overlap   hurricane_risk_sample                 short_post_k0_k1                        0.907946 -0.001240   0.000521 0.017275         -0.012404 2005_katrina_rita; 2012_isaac              negative short-run effect; significant at 5%; pretrend acceptable
+06k_bjs_style_imputation robustness_late_window clean_non_covid_no_overlap   hurricane_risk_sample                  late_post_k2_k3                        0.907946 -0.000560   0.000544 0.302963         -0.005599 2005_katrina_rita; 2012_isaac negative late-post estimate; not significant; interpreted as persistence check
+06k_bjs_style_imputation robustness_pre_placebo clean_non_covid_no_overlap pretrend_matched_sample pre_placebo_k_minus_4_to_minus_2                        0.886646 -0.000111   0.000142 0.435047         -0.001112 2005_katrina_rita; 2012_isaac            negative pre-placebo estimate; not significant; should be near zero
+06k_bjs_style_imputation robustness_main_window clean_non_covid_no_overlap pretrend_matched_sample                 short_post_k0_k1                        0.886646 -0.001306   0.000528 0.013330         -0.013057 2005_katrina_rita; 2012_isaac              negative short-run effect; significant at 5%; pretrend acceptable
+06k_bjs_style_imputation robustness_late_window clean_non_covid_no_overlap pretrend_matched_sample                  late_post_k2_k3                        0.886646 -0.001021   0.000553 0.064832         -0.010212 2005_katrina_rita; 2012_isaac negative late-post estimate; marginal at 10%; interpreted as persistence check
+
+7. Event interpretation table
+----------------------------------------------------------------------------------------------------
+             event_id           event_label                                 paper_role                                                                                                                                                                       interpretation
+    2005_katrina_rita     2005 Katrina/Rita                  main single-event support Strongest single-event causal-style evidence. Pretrend diagnostics are acceptable after updated closure data and restricted comparison groups; post-event coefficients are negative.
+           2012_isaac            2012 Isaac included in clean stack; weak individually                                                       Useful as part of clean non-COVID/no-overlap stack, but individually noisy. Do not use Isaac alone to anchor the causal claim.
+2020_laura_delta_zeta 2020 Laura/Delta/Zeta       excluded from preferred causal stack                                  Do not interpret causally. COVID-era schooling environment and restricted-sample pretrend concerns make this event unsuitable as a clean benchmark.
+             2021_ida              2021 Ida        excluded from preferred clean stack       Closure data are cleaner, but estimated effects are near zero and the k=-1 reference period overlaps the Laura/Delta/Zeta affected cohort. Use as heterogeneity/null evidence.
+        2024_francine         2024 Francine                       not used dynamically                                                Affected graduation year is 2025, so the panel has no post-2025 dynamic window. Keep only in descriptive/static robustness if needed.
+
+8. Key findings
+----------------------------------------------------------------------------------------------------
+               finding_id                                                                                         finding                                                                                                                       value                                                                       paper_interpretation
+            data_snapshot                                     Final panel uses confirmed, Isaac/Ida-updated closure data.                                    rows=6,323; schools=311; closure_rows=356; total_closure_days=2,698; max_closure_days=27 Final treatment construction is more defensible than the earlier API-only closure measure.
+     baseline_pooled_twfe                                Pooled weighted TWFE does not support a uniform negative effect.                                                                   coef=0.000146; SE=0.000450; p=0.745; per_10_days=0.001460            Use pooled TWFE as a baseline/descriptive result, not the main causal estimate.
+         main_06j_stacked Preferred 06j clean non-COVID/no-overlap stacked event study shows a negative short-run effect.                                               pretrend_p=0.856; coef=-0.001188; SE=0.000629; p=0.059; per_10_days=-0.011878                                               This should be the main causal-style result.
+robustness_06k_imputation          06k BJS-style imputation confirms the preferred clean-stack short-run negative effect.                                       imputed_pretrend_p=0.908; coef=-0.001240; SE=0.000521; p=0.017; per_10_days=-0.012404            Use as counterfactual-imputation robustness check, not as the only main result.
+              final_claim           The evidence supports a clean-stack short-run effect, not a uniform all-event effect. Preferred claim: no uniform statewide effect; clean non-COVID/no-overlap closures reduce TOPS eligibility in the short run.             Frame the paper around event heterogeneity and a credible preferred event set.
+
+9. Recommended paper wording
+----------------------------------------------------------------------------------------------------
+The pooled statewide estimates do not support a uniform causal effect of hurricane-related school closures on TOPS eligibility. Instead, the evidence points to substantial event heterogeneity. In the preferred clean non-COVID/no-overlap stacked specification, which pools Katrina/Rita and Isaac while excluding the COVID-era Laura/Delta/Zeta event and the Ida reference-overlap problem, pretrend diagnostics are strong and short-run post-event effects are consistently negative. The preferred stacked estimates imply that ten additional confirmed closure days reduce TOPS eligibility by roughly 1.2 percentage points in the affected and immediately following graduation cohorts. A BJS-style imputation estimator adapted to continuous event-specific closure intensity yields a similar negative short-run effect, supporting the stacked event-study result.
+
+10. Caveat
+----------------------------------------------------------------------------------------------------
+Do not claim a clean uniform all-hurricane effect. The preferred claim is a clean-stack short-run effect for non-COVID, non-overlapping hurricane closure episodes.

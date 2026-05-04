@@ -1,0 +1,28 @@
+07a NCES CCD Public School Universe Raw Download Report
+====================================================================================================
+
+Source
+----------------------------------------------------------------------------------------------------
+https://nces.ed.gov/ccd/psu_rev.asp
+
+Target years
+----------------------------------------------------------------------------------------------------
+2002-03, 2003-04, 2004-05, 2006-07, 2007-08, 2008-09, 2009-10, 2010-11, 2012-13, 2013-14, 2014-15, 2015-16, 2016-17
+
+Summary
+----------------------------------------------------------------------------------------------------
+Discovered links: 74
+Selected data links: 46
+Downloaded: 46
+Skipped because file already exists: 0
+Failed: 0
+
+Output
+----------------------------------------------------------------------------------------------------
+data/raw/nces_ccd/public_school_universe
+data/raw/nces_ccd/public_school_universe/download_manifest.csv
+data/raw/nces_ccd/public_school_universe/nces_psu_page_links.csv
+
+Next step
+----------------------------------------------------------------------------------------------------
+Run/write 07b_merge_nces_ccd_controls.py to extract Louisiana school-level enrollment, grade 12 enrollment, FRL share, race/ethnicity shares, teacher FTE, student-teacher ratio, and locale, then merge to the preferred stacked event-study panel.

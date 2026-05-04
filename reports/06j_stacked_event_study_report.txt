@@ -1,0 +1,276 @@
+06j Stacked Event Study
+====================================================================================================
+
+Input
+----------------------------------------------------------------------------------------------------
+data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+
+Purpose
+----------------------------------------------------------------------------------------------------
+This script estimates stacked event-study specifications using confirmed hurricane-related closure intensity. Each hurricane event is first placed into its own event-time stack, and then selected stacks are pooled.
+
+Model
+----------------------------------------------------------------------------------------------------
+eligibility_rate ~ event-time closure intensity interactions + school-by-stack fixed effects + stack-by-calendar-year fixed effects
+Weights use students_processed where available. Standard errors are clustered by original NCES school ID.
+
+Stack specifications
+----------------------------------------------------------------------------------------------------
+all_events: 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+non_covid_events: 2005_katrina_rita; 2012_isaac; 2021_ida
+clean_non_covid_no_overlap: 2005_katrina_rita; 2012_isaac
+katrina_rita_only: 2005_katrina_rita
+modern_non_covid: 2012_isaac; 2021_ida
+
+Sample strategies
+----------------------------------------------------------------------------------------------------
+full_sample: treated schools compared with all schools.
+hurricane_risk_sample: treated schools compared with schools that have historical confirmed hurricane-related closure exposure.
+pretrend_matched_sample: treated schools compared with nearest-neighbor controls matched on pre-event eligibility mean and slope.
+
+Stacked sample audit
+----------------------------------------------------------------------------------------------------
+                stack_spec         sample_strategy  n_obs  n_original_schools  n_stack_units  n_stacks  treated_stack_units  control_stack_units  total_stack_closure_days  mean_outcome                                                included_events
+                all_events             full_sample   7967                 311           1135         4                  295                  840                    2540.0      0.606947 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample   4958                 184            681         4                  295                  386                    2540.0      0.617086 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample   4167                 175            537         4                  276                  261                    2427.0      0.614860 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+          non_covid_events             full_sample   5786                 311            830         3                  168                  662                    1791.0      0.609585                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample   3604                 184            499         3                  168                  331                    1791.0      0.621367                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample   2872                 174            371         3                  157                  214                    1703.0      0.615375                        2005_katrina_rita; 2012_isaac; 2021_ida
+clean_non_covid_no_overlap             full_sample   3600                 280            523         2                   78                  445                     812.0      0.611504                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample   2242                 169            316         2                   78                  238                     812.0      0.627941                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample   1569                 129            202         2                   73                  129                     782.0      0.619126                                  2005_katrina_rita; 2012_isaac
+         katrina_rita_only             full_sample   1682                 245            245         1                   34                  211                     523.0      0.616680                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample   1048                 147            147         1                   34                  113                     523.0      0.633454                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample    763                  98             98         1                   34                   64                     523.0      0.637197                                              2005_katrina_rita
+          modern_non_covid             full_sample   4104                 311            585         2                  134                  451                    1268.0      0.606678                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample   2556                 184            352         2                  134                  218                    1268.0      0.616411                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample   2109                 174            273         2                  123                  150                    1180.0      0.607480                                           2012_isaac; 2021_ida
+
+Stacked pretrend tests
+----------------------------------------------------------------------------------------------------
+                stack_spec         sample_strategy                test_name tested_event_times  wald_stat  df  p_value
+                all_events             full_sample      joint_pretrend_test           -4,-3,-2   7.511610   3 0.057261
+                all_events             full_sample individual_pretrend_test                 -4   5.536923   1 0.018619
+                all_events             full_sample individual_pretrend_test                 -3   0.678216   1 0.410202
+                all_events             full_sample individual_pretrend_test                 -2   2.799777   1 0.094277
+                all_events   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   5.547957   3 0.135798
+                all_events   hurricane_risk_sample individual_pretrend_test                 -4   2.876833   1 0.089863
+                all_events   hurricane_risk_sample individual_pretrend_test                 -3   0.052633   1 0.818544
+                all_events   hurricane_risk_sample individual_pretrend_test                 -2   0.704679   1 0.401216
+                all_events pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   5.332518   3 0.149006
+                all_events pretrend_matched_sample individual_pretrend_test                 -4   3.397265   1 0.065305
+                all_events pretrend_matched_sample individual_pretrend_test                 -3   0.000036   1 0.995204
+                all_events pretrend_matched_sample individual_pretrend_test                 -2   0.850765   1 0.356336
+          non_covid_events             full_sample      joint_pretrend_test           -4,-3,-2   8.119348   3 0.043608
+          non_covid_events             full_sample individual_pretrend_test                 -4   5.030901   1 0.024899
+          non_covid_events             full_sample individual_pretrend_test                 -3   1.407486   1 0.235474
+          non_covid_events             full_sample individual_pretrend_test                 -2   5.798238   1 0.016042
+          non_covid_events   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   5.170377   3 0.159738
+          non_covid_events   hurricane_risk_sample individual_pretrend_test                 -4   2.337296   1 0.126309
+          non_covid_events   hurricane_risk_sample individual_pretrend_test                 -3   0.021596   1 0.883167
+          non_covid_events   hurricane_risk_sample individual_pretrend_test                 -2   2.982051   1 0.084193
+          non_covid_events pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   5.669242   3 0.128859
+          non_covid_events pretrend_matched_sample individual_pretrend_test                 -4   3.368476   1 0.066455
+          non_covid_events pretrend_matched_sample individual_pretrend_test                 -3   0.284823   1 0.593557
+          non_covid_events pretrend_matched_sample individual_pretrend_test                 -2   3.618699   1 0.057134
+clean_non_covid_no_overlap             full_sample      joint_pretrend_test           -4,-3,-2   1.352699   3 0.716659
+clean_non_covid_no_overlap             full_sample individual_pretrend_test                 -4   0.764892   1 0.381802
+clean_non_covid_no_overlap             full_sample individual_pretrend_test                 -3   0.000568   1 0.980979
+clean_non_covid_no_overlap             full_sample individual_pretrend_test                 -2   0.282439   1 0.595107
+clean_non_covid_no_overlap   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   0.774616   3 0.855528
+clean_non_covid_no_overlap   hurricane_risk_sample individual_pretrend_test                 -4   0.372787   1 0.541489
+clean_non_covid_no_overlap   hurricane_risk_sample individual_pretrend_test                 -3   0.008690   1 0.925729
+clean_non_covid_no_overlap   hurricane_risk_sample individual_pretrend_test                 -2   0.157954   1 0.691048
+clean_non_covid_no_overlap pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   0.803508   3 0.848628
+clean_non_covid_no_overlap pretrend_matched_sample individual_pretrend_test                 -4   0.732974   1 0.391921
+clean_non_covid_no_overlap pretrend_matched_sample individual_pretrend_test                 -3   0.351919   1 0.553029
+clean_non_covid_no_overlap pretrend_matched_sample individual_pretrend_test                 -2   0.420395   1 0.516740
+         katrina_rita_only             full_sample      joint_pretrend_test           -4,-3,-2   4.390120   3 0.222303
+         katrina_rita_only             full_sample individual_pretrend_test                 -4   2.143206   1 0.143202
+         katrina_rita_only             full_sample individual_pretrend_test                 -3   0.032424   1 0.857100
+         katrina_rita_only             full_sample individual_pretrend_test                 -2   1.554403   1 0.212487
+         katrina_rita_only   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   2.920980   3 0.403970
+         katrina_rita_only   hurricane_risk_sample individual_pretrend_test                 -4   1.185698   1 0.276199
+         katrina_rita_only   hurricane_risk_sample individual_pretrend_test                 -3   0.116668   1 0.732677
+         katrina_rita_only   hurricane_risk_sample individual_pretrend_test                 -2   1.011112   1 0.314636
+         katrina_rita_only pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   2.088732   3 0.554196
+         katrina_rita_only pretrend_matched_sample individual_pretrend_test                 -4   1.202480   1 0.272827
+         katrina_rita_only pretrend_matched_sample individual_pretrend_test                 -3   0.000542   1 0.981430
+         katrina_rita_only pretrend_matched_sample individual_pretrend_test                 -2   0.957057   1 0.327929
+          modern_non_covid             full_sample      joint_pretrend_test           -4,-3,-2   5.777193   3 0.122968
+          modern_non_covid             full_sample individual_pretrend_test                 -4   3.310590   1 0.068835
+          modern_non_covid             full_sample individual_pretrend_test                 -3   2.642400   1 0.104046
+          modern_non_covid             full_sample individual_pretrend_test                 -2   4.545038   1 0.033014
+          modern_non_covid   hurricane_risk_sample      joint_pretrend_test           -4,-3,-2   2.613904   3 0.455057
+          modern_non_covid   hurricane_risk_sample individual_pretrend_test                 -4   1.088422   1 0.296821
+          modern_non_covid   hurricane_risk_sample individual_pretrend_test                 -3   0.176643   1 0.674274
+          modern_non_covid   hurricane_risk_sample individual_pretrend_test                 -2   2.347779   1 0.125462
+          modern_non_covid pretrend_matched_sample      joint_pretrend_test           -4,-3,-2   3.912939   3 0.271020
+          modern_non_covid pretrend_matched_sample individual_pretrend_test                 -4   2.102405   1 0.147068
+          modern_non_covid pretrend_matched_sample individual_pretrend_test                 -3   0.433114   1 0.510465
+          modern_non_covid pretrend_matched_sample individual_pretrend_test                 -2   3.309769   1 0.068869
+
+Dynamic stacked coefficients
+----------------------------------------------------------------------------------------------------
+                stack_spec         sample_strategy  event_time      coef  std_error  p_value  was_estimated  n_obs  n_stacks                                                included_events
+                all_events             full_sample          -4 -0.001361   0.000578 0.018619           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample          -3 -0.000363   0.000441 0.410202           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample          -2 -0.000687   0.000410 0.094277           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample          -1  0.000000   0.000000      NaN           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample           0 -0.000891   0.000573 0.120256           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample           1 -0.001205   0.000566 0.033405           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample           2 -0.001197   0.000560 0.032500           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample           3 -0.001283   0.000546 0.018731           True   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample          -4 -0.001023   0.000603 0.089863           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample          -3  0.000106   0.000462 0.818544           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample          -2 -0.000394   0.000469 0.401216           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample          -1  0.000000   0.000000      NaN           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample           0 -0.000384   0.000608 0.528131           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample           1 -0.000802   0.000593 0.175738           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample           2 -0.000718   0.000566 0.205103           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample           3 -0.000783   0.000549 0.153568           True   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample          -4 -0.001136   0.000616 0.065305           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample          -3 -0.000003   0.000475 0.995204           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample          -2 -0.000455   0.000494 0.356336           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample          -1  0.000000   0.000000      NaN           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample           0 -0.000580   0.000616 0.345731           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample           1 -0.000674   0.000605 0.264805           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample           2 -0.000969   0.000580 0.094990           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample           3 -0.001090   0.000553 0.048749           True   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+          non_covid_events             full_sample          -4 -0.001512   0.000674 0.024899           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample          -3 -0.000572   0.000482 0.235474           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample          -2 -0.001059   0.000440 0.016042           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample          -1  0.000000   0.000000      NaN           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample           0 -0.001602   0.000577 0.005484           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample           1 -0.001802   0.000592 0.002324           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample           2 -0.001706   0.000624 0.006267           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample           3 -0.001695   0.000617 0.005997           True   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample          -4 -0.001079   0.000706 0.126309           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample          -3 -0.000077   0.000521 0.883167           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample          -2 -0.000858   0.000497 0.084193           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample          -1  0.000000   0.000000      NaN           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample           0 -0.000867   0.000600 0.148465           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample           1 -0.001598   0.000643 0.012988           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample           2 -0.001184   0.000665 0.074758           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample           3 -0.001259   0.000659 0.056073           True   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample          -4 -0.001327   0.000723 0.066455           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample          -3 -0.000288   0.000540 0.593557           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample          -2 -0.001001   0.000526 0.057134           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample          -1  0.000000   0.000000      NaN           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample           0 -0.001176   0.000612 0.054677           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample           1 -0.001538   0.000662 0.020046           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample           2 -0.001569   0.000676 0.020333           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample           3 -0.001706   0.000651 0.008798           True   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+clean_non_covid_no_overlap             full_sample          -4 -0.001063   0.001216 0.381802           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample          -3  0.000016   0.000659 0.980979           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample          -2 -0.000348   0.000654 0.595107           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample          -1  0.000000   0.000000      NaN           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample           0 -0.001229   0.000662 0.063297           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample           1 -0.001820   0.000711 0.010534           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample           2 -0.001017   0.000698 0.145210           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample           3 -0.001140   0.000858 0.183778           True   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample          -4 -0.000748   0.001225 0.541489           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample          -3  0.000062   0.000664 0.925729           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample          -2 -0.000272   0.000683 0.691048           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample          -1  0.000000   0.000000      NaN           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample           0 -0.000988   0.000667 0.138740           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample           1 -0.001771   0.000728 0.014979           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample           2 -0.000763   0.000746 0.306160           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample           3 -0.000854   0.000892 0.338408           True   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample          -4 -0.001112   0.001299 0.391921           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample          -3 -0.000414   0.000697 0.553029           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample          -2 -0.000493   0.000760 0.516740           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample          -1  0.000000   0.000000      NaN           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample           0 -0.001555   0.000692 0.024551           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample           1 -0.001757   0.000759 0.020671           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample           2 -0.001401   0.000787 0.075059           True   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample           3 -0.001513   0.000918 0.099137           True   1569         2                                  2005_katrina_rita; 2012_isaac
+         katrina_rita_only             full_sample          -4 -0.001928   0.001317 0.143202           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample          -3  0.000117   0.000650 0.857100           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample          -2 -0.000812   0.000651 0.212487           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample          -1  0.000000   0.000000      NaN           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample           0 -0.002023   0.000757 0.007573           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample           1 -0.001664   0.000771 0.030972           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample           2 -0.001385   0.000769 0.071796           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample           3 -0.001306   0.000859 0.128202           True   1682         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample          -4 -0.001466   0.001346 0.276199           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample          -3  0.000222   0.000650 0.732677           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample          -2 -0.000668   0.000665 0.314636           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample          -1  0.000000   0.000000      NaN           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample           0 -0.001827   0.000761 0.016439           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample           1 -0.001568   0.000775 0.043120           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample           2 -0.001101   0.000801 0.169164           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample           3 -0.001037   0.000898 0.248016           True   1048         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample          -4 -0.001598   0.001457 0.272827           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample          -3 -0.000016   0.000691 0.981430           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample          -2 -0.000713   0.000729 0.327929           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample          -1  0.000000   0.000000      NaN           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample           0 -0.002113   0.000774 0.006346           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample           1 -0.001396   0.000797 0.079683           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample           2 -0.001499   0.000840 0.074182           True    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample           3 -0.001459   0.000941 0.121034           True    763         1                                              2005_katrina_rita
+          modern_non_covid             full_sample          -4 -0.001358   0.000747 0.068835           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample          -3 -0.001064   0.000655 0.104046           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample          -2 -0.001251   0.000587 0.033014           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample          -1  0.000000   0.000000      NaN           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample           0 -0.001308   0.000834 0.116912           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample           1 -0.001915   0.000886 0.030666           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample           2 -0.001967   0.000895 0.027891           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample           3 -0.002040   0.000830 0.014006           True   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample          -4 -0.000862   0.000826 0.296821           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample          -3 -0.000298   0.000709 0.674274           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample          -2 -0.001011   0.000659 0.125462           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample          -1  0.000000   0.000000      NaN           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample           0 -0.000107   0.000907 0.905710           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample           1 -0.001624   0.000967 0.093271           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample           2 -0.001263   0.000950 0.183890           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample           3 -0.001493   0.000898 0.096548           True   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample          -4 -0.001196   0.000825 0.147068           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample          -3 -0.000474   0.000720 0.510465           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample          -2 -0.001213   0.000667 0.068869           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample          -1  0.000000   0.000000      NaN           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample           0 -0.000501   0.000907 0.580775           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample           1 -0.001649   0.000976 0.091118           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample           2 -0.001629   0.000956 0.088372           True   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample           3 -0.001940   0.000869 0.025601           True   2109         2                                           2012_isaac; 2021_ida
+
+Post-window stacked estimates
+----------------------------------------------------------------------------------------------------
+                stack_spec         sample_strategy      post_window      coef  std_error  p_value  coef_per_10_days  n_obs  n_stacks                                                included_events
+                all_events             full_sample short_post_k0_k1 -0.000463   0.000441 0.294143         -0.004627   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events             full_sample  late_post_k2_k3 -0.000653   0.000427 0.125572         -0.006533   7967         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample short_post_k0_k1 -0.000286   0.000449 0.523921         -0.002861   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events   hurricane_risk_sample  late_post_k2_k3 -0.000442   0.000430 0.303559         -0.004422   4958         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample short_post_k0_k1 -0.000246   0.000450 0.583606         -0.002465   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+                all_events pretrend_matched_sample  late_post_k2_k3 -0.000647   0.000437 0.138340         -0.006470   4167         4 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+          non_covid_events             full_sample short_post_k0_k1 -0.000933   0.000509 0.066688         -0.009328   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events             full_sample  late_post_k2_k3 -0.000932   0.000517 0.071704         -0.009320   5786         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample short_post_k0_k1 -0.000749   0.000532 0.158856         -0.007491   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events   hurricane_risk_sample  late_post_k2_k3 -0.000732   0.000549 0.181918         -0.007324   3604         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample short_post_k0_k1 -0.000719   0.000539 0.182366         -0.007186   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+          non_covid_events pretrend_matched_sample  late_post_k2_k3 -0.000994   0.000557 0.074360         -0.009943   2872         3                        2005_katrina_rita; 2012_isaac; 2021_ida
+clean_non_covid_no_overlap             full_sample short_post_k0_k1 -0.001236   0.000623 0.047181         -0.012360   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap             full_sample  late_post_k2_k3 -0.000781   0.000679 0.249738         -0.007813   3600         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample short_post_k0_k1 -0.001188   0.000629 0.058948         -0.011878   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap   hurricane_risk_sample  late_post_k2_k3 -0.000605   0.000713 0.396128         -0.006051   2242         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample short_post_k0_k1 -0.001197   0.000664 0.071344         -0.011972   1569         2                                  2005_katrina_rita; 2012_isaac
+clean_non_covid_no_overlap pretrend_matched_sample  late_post_k2_k3 -0.000995   0.000754 0.186522         -0.009954   1569         2                                  2005_katrina_rita; 2012_isaac
+         katrina_rita_only             full_sample short_post_k0_k1 -0.001284   0.000711 0.070890         -0.012841   1682         1                                              2005_katrina_rita
+         katrina_rita_only             full_sample  late_post_k2_k3 -0.000793   0.000712 0.265552         -0.007930   1682         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample short_post_k0_k1 -0.001294   0.000725 0.074429         -0.012936   1048         1                                              2005_katrina_rita
+         katrina_rita_only   hurricane_risk_sample  late_post_k2_k3 -0.000670   0.000741 0.366077         -0.006696   1048         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample short_post_k0_k1 -0.001239   0.000738 0.092970         -0.012393    763         1                                              2005_katrina_rita
+         katrina_rita_only pretrend_matched_sample  late_post_k2_k3 -0.000974   0.000784 0.213843         -0.009742    763         1                                              2005_katrina_rita
+          modern_non_covid             full_sample short_post_k0_k1 -0.000676   0.000667 0.311141         -0.006756   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid             full_sample  late_post_k2_k3 -0.001063   0.000667 0.110663         -0.010634   4104         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample short_post_k0_k1 -0.000317   0.000727 0.662988         -0.003167   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid   hurricane_risk_sample  late_post_k2_k3 -0.000817   0.000706 0.246915         -0.008175   2556         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample short_post_k0_k1 -0.000341   0.000736 0.642915         -0.003413   2109         2                                           2012_isaac; 2021_ida
+          modern_non_covid pretrend_matched_sample  late_post_k2_k3 -0.001038   0.000717 0.147634         -0.010377   2109         2                                           2012_isaac; 2021_ida
+
+Interpretation guide
+----------------------------------------------------------------------------------------------------
+If all_events is close to zero while katrina_rita_only is negative, that reinforces event heterogeneity rather than a uniform statewide effect.
+The clean_non_covid_no_overlap specification excludes Laura/Delta/Zeta and Ida. It is designed to avoid the COVID-era event and Ida's contaminated k=-1 reference year.
+The post-window model reduces noise by pooling k=0 and k=1 into a short-post effect and k=2 and k=3 into a late-post effect.

@@ -1,0 +1,207 @@
+06f Event-Study Pretrend Strengthening
+==========================================================================================
+
+Input
+------------------------------------------------------------------------------------------
+data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+
+Model
+------------------------------------------------------------------------------------------
+Outcome: eligibility_rate
+Treatment intensity: event-specific confirmed hurricane-related closure days
+Weighted by students_processed; standard errors clustered by nces_school_id
+Fixed effects: school and graduation-year fixed effects
+
+Formula
+------------------------------------------------------------------------------------------
+eligibility_rate ~ iw_2005_katrina_rita_m4 + iw_2005_katrina_rita_m3 + iw_2005_katrina_rita_m2 + iw_2005_katrina_rita_p0 + iw_2005_katrina_rita_p1 + iw_2005_katrina_rita_p2 + iw_2005_katrina_rita_p3 + iw_2012_isaac_m4 + iw_2012_isaac_m3 + iw_2012_isaac_m2 + iw_2012_isaac_p0 + iw_2012_isaac_p1 + iw_2012_isaac_p2 + iw_2012_isaac_p3 + iw_2020_laura_delta_zeta_m4 + iw_2020_laura_delta_zeta_m3 + iw_2020_laura_delta_zeta_m2 + iw_2020_laura_delta_zeta_p0 + iw_2020_laura_delta_zeta_p1 + iw_2020_laura_delta_zeta_p2 + iw_2020_laura_delta_zeta_p3 + iw_2021_ida_m4 + iw_2021_ida_m3 + iw_2021_ida_m2 + iw_2021_ida_p0 + iw_2021_ida_p1 + iw_2021_ida_p2 + iw_2021_ida_p3 + C(nces_school_id) + C(graduation_year)
+
+Sample
+------------------------------------------------------------------------------------------
+N observations: 6323
+N schools: 311
+R-squared: 0.803556
+
+Reference-period schemes
+------------------------------------------------------------------------------------------
+original_k_minus_1: [-1]
+preavg_k_minus_4_to_minus_2: [-4, -3, -2]
+preavg_k_minus_3_to_minus_2: [-3, -2]
+
+Pretrend tests under original k=-1 reference
+------------------------------------------------------------------------------------------
+                             test_name              event_id tested_event_times  wald_stat  df  p_value
+     joint_pretrend_original_reference     2005_katrina_rita           -4,-3,-2   4.530252   3 0.209608
+individual_pretrend_original_reference     2005_katrina_rita                 -4   0.703074   1 0.401753
+individual_pretrend_original_reference     2005_katrina_rita                 -3   1.325837   1 0.249547
+individual_pretrend_original_reference     2005_katrina_rita                 -2   0.056426   1 0.812236
+     joint_pretrend_original_reference            2012_isaac           -4,-3,-2   6.352269   3 0.095674
+individual_pretrend_original_reference            2012_isaac                 -4   1.418923   1 0.233581
+individual_pretrend_original_reference            2012_isaac                 -3   1.028864   1 0.310426
+individual_pretrend_original_reference            2012_isaac                 -2   0.378794   1 0.538250
+     joint_pretrend_original_reference 2020_laura_delta_zeta           -4,-3,-2   3.718489   3 0.293511
+individual_pretrend_original_reference 2020_laura_delta_zeta                 -4   0.127689   1 0.720841
+individual_pretrend_original_reference 2020_laura_delta_zeta                 -3   3.114575   1 0.077595
+individual_pretrend_original_reference 2020_laura_delta_zeta                 -2   2.963942   1 0.085140
+     joint_pretrend_original_reference              2021_ida           -4,-3,-2   1.295050   3 0.730309
+individual_pretrend_original_reference              2021_ida                 -4   0.045438   1 0.831200
+individual_pretrend_original_reference              2021_ida                 -3   0.517851   1 0.471760
+individual_pretrend_original_reference              2021_ida                 -2   0.000443   1 0.983207
+
+Reference-sensitivity coefficients
+------------------------------------------------------------------------------------------
+           reference_scheme              event_id  event_time      coef  std_error  p_value  overlaps_other_event_year
+         original_k_minus_1     2005_katrina_rita          -4 -0.000920   0.001097 0.401753                      False
+         original_k_minus_1     2005_katrina_rita          -3  0.001078   0.000937 0.249547                      False
+         original_k_minus_1     2005_katrina_rita          -2  0.000177   0.000744 0.812236                      False
+         original_k_minus_1     2005_katrina_rita          -1  0.000000   0.000000      NaN                      False
+         original_k_minus_1     2005_katrina_rita           0 -0.001154   0.000822 0.160517                      False
+         original_k_minus_1     2005_katrina_rita           1 -0.000714   0.000646 0.268885                      False
+         original_k_minus_1     2005_katrina_rita           2 -0.000451   0.000699 0.518909                      False
+         original_k_minus_1     2005_katrina_rita           3 -0.000464   0.000603 0.442309                      False
+         original_k_minus_1            2012_isaac          -4  0.002096   0.001760 0.233581                      False
+         original_k_minus_1            2012_isaac          -3 -0.001692   0.001668 0.310426                      False
+         original_k_minus_1            2012_isaac          -2  0.001100   0.001787 0.538250                      False
+         original_k_minus_1            2012_isaac          -1  0.000000   0.000000      NaN                      False
+         original_k_minus_1            2012_isaac           0  0.002723   0.001994 0.172051                      False
+         original_k_minus_1            2012_isaac           1 -0.002751   0.001956 0.159450                      False
+         original_k_minus_1            2012_isaac           2  0.000845   0.001420 0.551971                      False
+         original_k_minus_1            2012_isaac           3 -0.000761   0.002058 0.711586                      False
+         original_k_minus_1 2020_laura_delta_zeta          -4  0.000238   0.000667 0.720841                      False
+         original_k_minus_1 2020_laura_delta_zeta          -3  0.001519   0.000861 0.077595                      False
+         original_k_minus_1 2020_laura_delta_zeta          -2  0.001722   0.001000 0.085140                      False
+         original_k_minus_1 2020_laura_delta_zeta          -1  0.000000   0.000000      NaN                      False
+         original_k_minus_1 2020_laura_delta_zeta           0  0.002587   0.001309 0.048179                      False
+         original_k_minus_1 2020_laura_delta_zeta           1  0.001805   0.001377 0.189856                       True
+         original_k_minus_1 2020_laura_delta_zeta           2  0.001475   0.001114 0.185497                      False
+         original_k_minus_1 2020_laura_delta_zeta           3  0.000994   0.001029 0.334138                      False
+         original_k_minus_1              2021_ida          -4 -0.000156   0.000730 0.831200                      False
+         original_k_minus_1              2021_ida          -3  0.000526   0.000731 0.471760                      False
+         original_k_minus_1              2021_ida          -2 -0.000015   0.000699 0.983207                      False
+         original_k_minus_1              2021_ida          -1  0.000000   0.000000      NaN                       True
+         original_k_minus_1              2021_ida           0 -0.000217   0.000782 0.781208                      False
+         original_k_minus_1              2021_ida           1  0.000070   0.000795 0.929440                      False
+         original_k_minus_1              2021_ida           2 -0.000655   0.000891 0.462164                      False
+         original_k_minus_1              2021_ida           3 -0.000567   0.000766 0.459179                       True
+preavg_k_minus_4_to_minus_2     2005_katrina_rita          -4 -0.001032   0.000700 0.140459                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita          -3  0.000967   0.000457 0.034442                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita          -2  0.000065   0.000538 0.903773                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita          -1 -0.000112   0.000741 0.880135                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita           0 -0.001266   0.000963 0.188675                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita           1 -0.000826   0.000853 0.332805                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita           2 -0.000563   0.000934 0.546841                      False
+preavg_k_minus_4_to_minus_2     2005_katrina_rita           3 -0.000575   0.000830 0.488250                      False
+preavg_k_minus_4_to_minus_2            2012_isaac          -4  0.001595   0.001069 0.135756                      False
+preavg_k_minus_4_to_minus_2            2012_isaac          -3 -0.002193   0.000899 0.014747                      False
+preavg_k_minus_4_to_minus_2            2012_isaac          -2  0.000598   0.001076 0.578146                      False
+preavg_k_minus_4_to_minus_2            2012_isaac          -1 -0.000501   0.001410 0.722130                      False
+preavg_k_minus_4_to_minus_2            2012_isaac           0  0.002222   0.001611 0.167779                      False
+preavg_k_minus_4_to_minus_2            2012_isaac           1 -0.003253   0.001771 0.066235                      False
+preavg_k_minus_4_to_minus_2            2012_isaac           2  0.000344   0.001435 0.810704                      False
+preavg_k_minus_4_to_minus_2            2012_isaac           3 -0.001262   0.002182 0.562931                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta          -4 -0.000922   0.000583 0.114011                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta          -3  0.000359   0.000425 0.397818                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta          -2  0.000562   0.000512 0.271996                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta          -1 -0.001160   0.000684 0.089923                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta           0  0.001428   0.001176 0.224941                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta           1  0.000646   0.001060 0.542647                       True
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta           2  0.000315   0.000809 0.696640                      False
+preavg_k_minus_4_to_minus_2 2020_laura_delta_zeta           3 -0.000166   0.000757 0.826381                      False
+preavg_k_minus_4_to_minus_2              2021_ida          -4 -0.000274   0.000395 0.487496                      False
+preavg_k_minus_4_to_minus_2              2021_ida          -3  0.000407   0.000398 0.305904                      False
+preavg_k_minus_4_to_minus_2              2021_ida          -2 -0.000133   0.000490 0.785832                      False
+preavg_k_minus_4_to_minus_2              2021_ida          -1 -0.000119   0.000577 0.837348                       True
+preavg_k_minus_4_to_minus_2              2021_ida           0 -0.000336   0.000722 0.641908                      False
+preavg_k_minus_4_to_minus_2              2021_ida           1 -0.000048   0.000723 0.946907                      False
+preavg_k_minus_4_to_minus_2              2021_ida           2 -0.000774   0.000799 0.332559                      False
+preavg_k_minus_4_to_minus_2              2021_ida           3 -0.000686   0.000767 0.371042                       True
+preavg_k_minus_3_to_minus_2     2005_katrina_rita          -4 -0.001548   0.001050 0.140459                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita          -3  0.000451   0.000356 0.205437                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita          -2 -0.000451   0.000356 0.205437                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita          -1 -0.000628   0.000767 0.413384                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita           0 -0.001781   0.000886 0.044269                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita           1 -0.001342   0.000739 0.069373                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita           2 -0.001079   0.000834 0.195875                      False
+preavg_k_minus_3_to_minus_2     2005_katrina_rita           3 -0.001091   0.000823 0.185038                      False
+preavg_k_minus_3_to_minus_2            2012_isaac          -4  0.002392   0.001604 0.135756                      False
+preavg_k_minus_3_to_minus_2            2012_isaac          -3 -0.001396   0.000835 0.094684                      False
+preavg_k_minus_3_to_minus_2            2012_isaac          -2  0.001396   0.000835 0.094684                      False
+preavg_k_minus_3_to_minus_2            2012_isaac          -1  0.000296   0.001513 0.844840                      False
+preavg_k_minus_3_to_minus_2            2012_isaac           0  0.003019   0.001679 0.072074                      False
+preavg_k_minus_3_to_minus_2            2012_isaac           1 -0.002455   0.001868 0.188741                      False
+preavg_k_minus_3_to_minus_2            2012_isaac           2  0.001141   0.001515 0.451441                      False
+preavg_k_minus_3_to_minus_2            2012_isaac           3 -0.000465   0.002233 0.835127                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta          -4 -0.001382   0.000875 0.114011                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta          -3 -0.000101   0.000369 0.783712                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta          -2  0.000101   0.000369 0.783712                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta          -1 -0.001620   0.000857 0.058620                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta           0  0.000967   0.001123 0.389475                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta           1  0.000185   0.001019 0.856129                       True
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta           2 -0.000145   0.000812 0.858013                      False
+preavg_k_minus_3_to_minus_2 2020_laura_delta_zeta           3 -0.000627   0.000793 0.429615                      False
+preavg_k_minus_3_to_minus_2              2021_ida          -4 -0.000411   0.000592 0.487496                      False
+preavg_k_minus_3_to_minus_2              2021_ida          -3  0.000270   0.000400 0.499753                      False
+preavg_k_minus_3_to_minus_2              2021_ida          -2 -0.000270   0.000400 0.499753                      False
+preavg_k_minus_3_to_minus_2              2021_ida          -1 -0.000256   0.000592 0.666049                       True
+preavg_k_minus_3_to_minus_2              2021_ida           0 -0.000473   0.000711 0.505958                      False
+preavg_k_minus_3_to_minus_2              2021_ida           1 -0.000185   0.000688 0.787830                      False
+preavg_k_minus_3_to_minus_2              2021_ida           2 -0.000911   0.000802 0.256043                      False
+preavg_k_minus_3_to_minus_2              2021_ida           3 -0.000823   0.000763 0.281016                       True
+
+IW reference-sensitivity aggregates
+------------------------------------------------------------------------------------------
+           reference_scheme                           aggregate_name  event_time      coef  std_error  p_value                                                included_events
+         original_k_minus_1                            iw_all_events          -4  0.000059   0.000455 0.896319 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events          -3  0.000680   0.000491 0.165575 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events          -2  0.000664   0.000445 0.136299 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events          -1  0.000000   0.000000      NaN 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events           0  0.000752   0.000594 0.205872 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events           1  0.000099   0.000602 0.869025 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events           2  0.000186   0.000569 0.744068 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1                            iw_all_events           3 -0.000108   0.000519 0.835868 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years          -4  0.000194   0.000572 0.734403           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years          -3  0.000777   0.000625 0.214153           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years          -2  0.001089   0.000622 0.079952           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years          -1  0.000000   0.000000      NaN           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years           0  0.001359   0.000787 0.084381           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years           1 -0.001439   0.000777 0.064034                                  2005_katrina_rita; 2012_isaac
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years           2  0.000713   0.000659 0.278905           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+         original_k_minus_1 iw_clean_excluding_ida_and_overlap_years           3  0.000181   0.000633 0.775474           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2                            iw_all_events          -4 -0.000408   0.000293 0.163242 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events          -3  0.000212   0.000237 0.369156 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events          -2  0.000196   0.000291 0.500366 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events          -1 -0.000468   0.000374 0.211453 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events           0  0.000284   0.000560 0.612040 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events           1 -0.000368   0.000517 0.475809 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events           2 -0.000282   0.000493 0.566936 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2                            iw_all_events           3 -0.000575   0.000470 0.220736 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -4 -0.000493   0.000415 0.235601           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -3  0.000090   0.000317 0.775921           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -2  0.000402   0.000385 0.296003           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -1 -0.000687   0.000478 0.150448           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years           0  0.000672   0.000739 0.363115           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years           1 -0.001690   0.000802 0.035041                                  2005_katrina_rita; 2012_isaac
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years           2  0.000026   0.000572 0.963161           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_4_to_minus_2 iw_clean_excluding_ida_and_overlap_years           3 -0.000506   0.000597 0.396815           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2                            iw_all_events          -4 -0.000613   0.000439 0.163242 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events          -3  0.000008   0.000221 0.969988 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events          -2 -0.000008   0.000221 0.969988 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events          -1 -0.000672   0.000413 0.103954 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events           0  0.000080   0.000550 0.884930 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events           1 -0.000573   0.000499 0.251143 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events           2 -0.000486   0.000483 0.314416 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2                            iw_all_events           3 -0.000779   0.000494 0.114538 2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta; 2021_ida
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -4 -0.000739   0.000623 0.235601           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -3 -0.000156   0.000285 0.584293           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -2  0.000156   0.000285 0.584293           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years          -1 -0.000933   0.000555 0.092596           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years           0  0.000426   0.000711 0.548916           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years           1 -0.001738   0.000770 0.023910                                  2005_katrina_rita; 2012_isaac
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years           2 -0.000220   0.000556 0.692548           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+preavg_k_minus_3_to_minus_2 iw_clean_excluding_ida_and_overlap_years           3 -0.000752   0.000622 0.226492           2005_katrina_rita; 2012_isaac; 2020_laura_delta_zeta
+
+Interpretation guide
+------------------------------------------------------------------------------------------
+If a post-event coefficient remains similar when normalized to the average of several pre-periods, the result is less dependent on the single omitted k=-1 year.
+If the joint pretrend test has a small p-value, the event still has a pretrend problem and should be interpreted cautiously.
+This script improves diagnostic credibility; it does not force the data to satisfy parallel trends.

@@ -1,0 +1,83 @@
+07b NCES CCD Controls Merge Report
+====================================================================================================
+
+Inputs
+----------------------------------------------------------------------------------------------------
+data/raw/nces_ccd/public_school_universe
+data/processed/regression_panel_with_confirmed_closures_kr_expanded_modern2020_isaac_ida.csv
+
+Outputs
+----------------------------------------------------------------------------------------------------
+data/intermediate/nces_ccd_annual_controls_long.csv
+data/processed/nces_ccd_pre_event_controls_clean_stack.csv
+data/processed/regression_panel_with_nces_ccd_controls.csv
+data/analysis/07b_nces_ccd_parse_audit.csv
+data/analysis/07b_nces_ccd_pre_event_coverage.csv
+
+Annual controls summary
+----------------------------------------------------------------------------------------------------
+Annual CCD rows: 13,629
+Unique schools in annual CCD controls: 2,045
+Graduation years covered: 2008, 2009, 2010, 2011, 2012, 2013, 2014, 2015, 2017
+
+Annual control non-missing coverage
+----------------------------------------------------------------------------------------------------
+ccd_enrollment: 5,600 rows (41.1%)
+ccd_grade12_enrollment: 1,542 rows (11.3%)
+ccd_frl_share: 5,529 rows (40.6%)
+ccd_black_share: 5,536 rows (40.6%)
+ccd_hispanic_share: 5,536 rows (40.6%)
+ccd_teacher_fte: 5,596 rows (41.1%)
+ccd_student_teacher_ratio: 5,509 rows (40.4%)
+ccd_locale: 5,890 rows (43.2%)
+
+Pre-event coverage by event
+----------------------------------------------------------------------------------------------------
+         event_id       event_label pre_graduation_years  annual_rows_in_pre_period  schools_with_any_pre_ccd_row  annual_rows_with_pre_enrollment  schools_with_pre_enrollment  annual_rows_with_pre_grade12_enrollment  schools_with_pre_grade12_enrollment  annual_rows_with_pre_frl_share  schools_with_pre_frl_share  annual_rows_with_pre_black_share  schools_with_pre_black_share  annual_rows_with_pre_hispanic_share  schools_with_pre_hispanic_share  annual_rows_with_pre_teacher_fte  schools_with_pre_teacher_fte  annual_rows_with_pre_student_teacher_ratio  schools_with_pre_student_teacher_ratio  annual_rows_with_pre_locale  schools_with_pre_locale
+2005_katrina_rita 2005 Katrina/Rita  2002,2003,2004,2005                          0                             0                                0                            0                                        0                                    0                               0                           0                                 0                             0                                    0                                0                                 0                             0                                           0                                       0                            0                        0
+       2012_isaac        2012 Isaac  2009,2010,2011,2012                       6333                          1754                             2924                         1530                                      830                                  449                            2864                        1472                              2860                          1472                                 2860                             1472                              2865                          1482                                        2847                                    1478                         6333                     1754
+
+Parse audit status counts
+----------------------------------------------------------------------------------------------------
+status
+missing_school_id    23
+standardized         11
+no_louisiana_rows     2
+
+Main panel merge coverage
+----------------------------------------------------------------------------------------------------
+Panel rows after merge: 6,323
+annual ccd_enrollment: 891 rows (14.1%)
+annual ccd_grade12_enrollment: 890 rows (14.1%)
+annual ccd_frl_share: 891 rows (14.1%)
+annual ccd_black_share: 890 rows (14.1%)
+annual ccd_hispanic_share: 890 rows (14.1%)
+annual ccd_teacher_fte: 890 rows (14.1%)
+annual ccd_student_teacher_ratio: 890 rows (14.1%)
+annual ccd_locale: 891 rows (14.1%)
+
+Wide pre-controls coverage for 2005_katrina_rita
+----------------------------------------------------------------------------------------------------
+pre_enrollment_2005_katrina_rita: 0 rows (0.0%)
+pre_grade12_enrollment_2005_katrina_rita: 0 rows (0.0%)
+pre_frl_share_2005_katrina_rita: 0 rows (0.0%)
+pre_black_share_2005_katrina_rita: 0 rows (0.0%)
+pre_hispanic_share_2005_katrina_rita: 0 rows (0.0%)
+pre_teacher_fte_2005_katrina_rita: 0 rows (0.0%)
+pre_student_teacher_ratio_2005_katrina_rita: 0 rows (0.0%)
+pre_locale_2005_katrina_rita: 299 rows (4.7%)
+
+Wide pre-controls coverage for 2012_isaac
+----------------------------------------------------------------------------------------------------
+pre_enrollment_2012_isaac: 5,803 rows (91.8%)
+pre_grade12_enrollment_2012_isaac: 5,764 rows (91.2%)
+pre_frl_share_2012_isaac: 5,803 rows (91.8%)
+pre_black_share_2012_isaac: 5,803 rows (91.8%)
+pre_hispanic_share_2012_isaac: 5,803 rows (91.8%)
+pre_teacher_fte_2012_isaac: 5,789 rows (91.6%)
+pre_student_teacher_ratio_2012_isaac: 5,789 rows (91.6%)
+pre_locale_2012_isaac: 6,102 rows (96.5%)
+
+Next step
+----------------------------------------------------------------------------------------------------
+Inspect coverage. If annual controls look reasonable, update 06n or write 06o to add NCES CCD pre-event controls to the preferred clean stacked model.
